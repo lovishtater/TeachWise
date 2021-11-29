@@ -3,7 +3,7 @@ import { signup } from '../action/auth';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const Signup = () => {
+const Signup = ({ signup }) => {
 	const [name, setName] = useState('manish');
 	const [email, setEmail] = useState('mam@gmail.com ');
 	const [password, setPassword] = useState('ljseh');

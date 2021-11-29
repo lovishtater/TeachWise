@@ -1,16 +1,14 @@
 import { SIGNUP } from './action.types';
 
-export const signup =
-	({ name, email, password }) =>
-	async (dispatch) => {
-		try {
-			console.log('data', name);
-			// const response = await fetch('/api/signup', data);
-			dispatch({
-				type: SIGNUP,
-				payload: name,
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	};
+export const signup = (data) => async (dispatch) => {
+	try {
+		console.log('data', data);
+		// const response = await fetch('/api/signup', data);
+		dispatch({
+			type: SIGNUP,
+			payload: data,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
