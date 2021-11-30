@@ -1,14 +1,33 @@
-import store from './store';
-import { Provider } from 'react-redux';
-import Signup from './views/Signup';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-function App() {
-	return (
-		<Provider store={store}>
-			{/* <div className="App">Home Route</div> */}
-			<Signup />
-		</Provider>
-	);
-}
+import { ThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline, StyledEngineProvider } from '@material-ui/core';
+
+// routing
+import Routes from './routes';
+
+// defaultTheme
+import theme from './themes';
+
+// project imports
+import NavigationScroll from './layout/NavigationScroll';
+
+//-----------------------|| APP ||-----------------------//
+
+const App = () => {
+    const customization = useSelector((state) => state.customization);
+
+    return (
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme(customization)}>
+                <CssBaseline />
+                <NavigationScroll>
+                    <Routes />
+                </NavigationScroll>
+            </ThemeProvider>
+        </StyledEngineProvider>
+    );
+};
 
 export default App;
