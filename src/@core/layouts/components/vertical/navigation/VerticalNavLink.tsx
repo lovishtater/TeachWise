@@ -1,7 +1,5 @@
 
 import { ElementType, ReactNode } from 'react'
-
-// ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -13,16 +11,10 @@ import Typography from '@mui/material/Typography'
 import Box, { BoxProps } from '@mui/material/Box'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton'
-
-// ** Configs Import
 import themeConfig from 'src/configs/themeConfig'
-
-// ** Types
 import { NavLink } from 'src/@core/layouts/types'
 import { Settings } from 'src/@core/context/settingsContext'
-
-// ** Custom Components Imports
-import UserIcon from 'src/layouts/components/UserIcon'
+// import UserIcon from 'src/layouts/components/UserIcon'
 
 
 interface Props {
