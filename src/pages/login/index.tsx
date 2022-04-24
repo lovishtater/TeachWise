@@ -154,7 +154,7 @@ const LoginPage = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Link href='/' passHref>
                 <IconButton component='a'>
-                  <Google sx={{ color: '#db4437' }} />
+                  <img src='images/logos/google.png' alt='Google' height={24} />
                 </IconButton>
               </Link>
             </Box>

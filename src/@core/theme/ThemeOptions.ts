@@ -1,16 +1,22 @@
-// ** MUI Theme Provider
 import { deepmerge } from '@mui/utils'
 import { ThemeOptions } from '@mui/material'
-
-// ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
-
-// ** Theme Override Imports
 import palette from './palette'
-import spacing from './spacing'
 import shadows from './shadows'
-import breakpoints from './breakpoints'
 
+const breakpoints = () => ({
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536
+  }
+})
+
+const spacing = {
+  spacing: (factor: number) => `${0.25 * factor}rem`
+}
 const themeOptions = (settings: Settings): ThemeOptions => {
   // ** Vars
   const { mode, themeColor } = settings
