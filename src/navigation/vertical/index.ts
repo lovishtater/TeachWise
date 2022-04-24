@@ -4,19 +4,19 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Feed',
-      path: '/'
+      path: '/feed'
     },
     {
-      sectionTitle: 'Pages'
+      sectionTitle: 'Students'
     },
     {
-      title: 'Login',
-      path: '/login',
+      title: 'Messages',
+      path: '/messages',
       // openInNewTab: true
     },
     {
-      title: 'Register',
-      path: '/register',
+      title: 'Payments',
+      path: '/payments',
       // openInNewTab: true
     },
   ]
