@@ -14,3 +14,57 @@ a {
 * {
   box-sizing: border-box;
 }
+
+#logocontainer{
+  position: absolute;
+  width:50px;
+  height:50px;
+  overflow:hidden;
+  transition:background-color 500ms;
+  cursor:pointer;
+  border-radius: 5px;
+  
+}
+
+#twlogo{
+  display: block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  background: transparent;
+  background-size: contain;
+  font-family: Trebuchet MS, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  color: #9155FD;
+  text-align: center;
+  line-height: 40px;
+}
+
+.loader{
+  display:block;
+  position:absolute;
+  background-color:#9155FD;
+}
+
+
+@keyframes slide1{
+  50%{width:32vh; margin-left:0;}
+  100%{margin-left:32vh;}
+}
+
+@keyframes slide2{
+  50%{height:32vh; margin-top:0;}
+  100%{margin-top:32vh;}
+}
+
+@keyframes slide3{
+  50%{width:32vh; margin-right:0;}
+  100%{margin-right:32vh;}
+}
+
+@keyframes slide4{
+  50%{height:32vh; margin-bottom:0}
+  100%{margin-bottom:32vh;}
+}
