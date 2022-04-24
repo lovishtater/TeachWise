@@ -1,12 +1,12 @@
 
-import { ElementType } from 'react'
+import { ReactNode } from 'react'
 
 
 import { SvgIconProps } from '@mui/material'
 
 interface UserIconProps {
   iconProps?: SvgIconProps
-  icon: string | ElementType
+  icon: string | ReactNode
 }
 
 const UserIcon = (props: UserIconProps) => {
