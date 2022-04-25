@@ -38,7 +38,7 @@ import Logo from 'src/layouts/components/Logo'
 import BlankLayout from '../../@core/layouts/BlankLayout'
 
 // ** Demo Imports
-import FooterIllustrationsV1 from '../../views/pages/auth/FooterIllustration'
+import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
 
 interface State {
   password: string
@@ -95,7 +95,7 @@ const LoginPage = () => {
              </Box>
           <Box sx={{ mb: 6 , display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
             <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Welcome to {themeConfig.templateName}! 
+              Welcome to {themeConfig.appName}! 
             </Typography>
             <Typography variant='body2'>Please sign-in to your account and start the Learning </Typography>
           </Box>
@@ -145,7 +145,7 @@ const LoginPage = () => {
                 New on our platform?
               </Typography>
               <Typography variant='body2'>
-                <Link passHref href='/pages/register'>
+                <Link passHref href='/register'>
                   <LinkStyled>Create an account</LinkStyled>
                 </Link>
               </Typography>
