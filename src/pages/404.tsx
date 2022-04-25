@@ -64,7 +64,7 @@ const Error404 = () => {
           </Button>
         </Link>
       </Box>
-      <FooterIllustrations image={<TreeIllustration alt='tree' src='/images/pages/tree.png' />} />
+      <FooterIllustrations image1={<TreeIllustration alt='tree' src='/images/pages/tree.png' />} />
     </Box>
   )
 }
