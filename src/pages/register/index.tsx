@@ -24,7 +24,7 @@ import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import themeConfig from 'src/configs/themeConfig'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
 import Logo from 'src/layouts/components/Logo'
 
 interface State {
@@ -87,7 +87,7 @@ const RegisterPage = () => {
                 fontSize: '1.5rem !important'
               }}
             >
-              {themeConfig.templateName}
+              {themeConfig.appName}
             </Typography>
           </Box>
           <Box sx={{ mb: 6 }}>
@@ -142,7 +142,7 @@ const RegisterPage = () => {
                 Already have an account?
               </Typography>
               <Typography variant='body2'>
-                <Link passHref href='/pages/login'>
+                <Link passHref href='/login'>
                   <LinkStyled>Sign in instead</LinkStyled>
                 </Link>
               </Typography>

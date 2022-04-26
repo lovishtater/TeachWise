@@ -38,7 +38,7 @@ import Logo from 'src/layouts/components/Logo'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
 import { Grid } from '@mui/material'
 import { ArrowRight } from 'mdi-material-ui'
 
@@ -94,7 +94,7 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Box sx={{ mb: 6 , display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
             <Typography variant='h2' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Welcome to {themeConfig.templateName}! 
+              Welcome to {themeConfig.appName}! 
             </Typography>
             <Typography variant='h6'>One-Stop solution for Teaching - Learning Marketplace/Volunteer matchmaking where students can post their doubts or topic/concept they want to learn then our Algorithm will match them with experienced tutors across our platform for online teaching/consulting. </Typography>
           </Box>

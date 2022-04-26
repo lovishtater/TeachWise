@@ -3,7 +3,7 @@ import { ContentWidth } from 'src/@core/layouts/types'
 
 type ThemeConfig = {
   mode: PaletteMode
-  templateName: string
+  appName: string
   routingLoader: boolean
   disableRipple: boolean
   navigationSize: number
@@ -14,7 +14,7 @@ type ThemeConfig = {
 
 const themeConfig: ThemeConfig = {
 
-  templateName: 'TeachWise',
+  appName: 'TeachWise',
   mode: 'light',
   contentWidth: 'boxed' /* full | boxed */,
   routingLoader: true /* true | false */,
