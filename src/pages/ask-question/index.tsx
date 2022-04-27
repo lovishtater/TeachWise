@@ -5,19 +5,19 @@ import { forwardRef, useState } from 'react'
 import {
 Grid,
 Card,
-Radio,
 Select,
 Button,
 MenuItem,
 TextField,
-FormLabel,
 InputLabel,
-RadioGroup,
 CardContent,
 FormControl,
-OutlinedInput,
+FormLabel,
 FormControlLabel,
+RadioGroup,
 CardHeader,
+Autocomplete,
+Radio,
 } from '@mui/material'
 
 const CreatePost = () => {
@@ -38,7 +38,7 @@ const CreatePost = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12} sx={{ marginTop: 4.8 }}>
+          <Grid item xs={12} >
             <TextField
               fullWidth
               multiline
@@ -48,34 +48,56 @@ const CreatePost = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth type='number' label='Price' placeholder='(123) 456-7890' />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+            <Autocomplete
+              fullWidth
+              multiple
+              id="tags-filled"
+              options={Expertise}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Expertise"
+                  placeholder="Expertise"
+                />
+              )}
+            />
 
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id='form-layouts-separator-multiple-select-label'>Languages</InputLabel>
-              <Select
-                multiple
-                defaultValue={['English']}
-                id='account-settings-multiple-select'
-                labelId='account-settings-multiple-select-label'
-                input={<OutlinedInput label='Languages' id='select-multiple-language' />}
-              >
-                <MenuItem value='English'>English</MenuItem>
-                <MenuItem value='French'>French</MenuItem>
-                <MenuItem value='Spanish'>Spanish</MenuItem>
-                <MenuItem value='Portuguese'>Portuguese</MenuItem>
-                <MenuItem value='Italian'>Italian</MenuItem>
-                <MenuItem value='German'>German</MenuItem>
-                <MenuItem value='Arabic'>Arabic</MenuItem>
-              </Select>
+            <Autocomplete
+              fullWidth
+              multiple
+              options={Language}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField {...params} label="Language" variant="outlined" />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+            <TextField fullWidth type='number' label='Minimum Fee' placeholder='Minimum Fee' />
+              </Grid>
+              <Grid item xs={6}>
+            <TextField fullWidth type='number' label='Maximum Fee' placeholder='Maximum Fee' />
+              </Grid>
+              </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl>
+              <FormLabel>Mode</FormLabel>
+              <RadioGroup row defaultValue='male' aria-label='gender' name='account-settings-info-radio'>
+                <FormControlLabel value='Online' label='Online' control={<Radio />} />
+                <FormControlLabel value='Offline' label='Offline' control={<Radio />} />
+              </RadioGroup>
             </FormControl>
           </Grid>
           <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
-              Save Changes
+              Post
             </Button>
             <Button type='reset' variant='outlined' color='secondary' onClick={() => setDate(null)}>
               Reset
@@ -88,3 +110,39 @@ const CreatePost = () => {
 }
 
 export default CreatePost
+
+const Language = [
+  "English",
+  "Spanish",
+  "Hindi",
+  "French",
+  "German",
+  "Italian",
+  "Portuguese",
+  "Russian",
+  "Japanese",
+  "Chinese",
+];
+
+const Expertise = [
+  "React.js",
+  "Node.js",
+  "English Literature",
+  "Spanish Literature",
+  "Hindi Literature",
+  "Social Science",
+  "Maths",
+  "HTML",
+  "CSS",
+  "Physics",
+  "Chemistry",
+  "Directed Research",
+  "Indirect Taxes",
+  "Biology",
+  "Basic Computer Science",
+  "Sanskrit",
+  "Business Management",
+  "Economics",
+  "Accounts",
+];
+
