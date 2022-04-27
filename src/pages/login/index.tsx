@@ -1,11 +1,9 @@
 
 import { ChangeEvent, MouseEvent, ReactNode, useState } from 'react'
 
-// ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-// ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
@@ -21,31 +19,22 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
-
-
-import Google from 'mdi-material-ui/Google'
-import Github from 'mdi-material-ui/Github'
-import Twitter from 'mdi-material-ui/Twitter'
-import Facebook from 'mdi-material-ui/Facebook'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-
-// ** Configs
 import themeConfig from '../../configs/themeConfig'
 import Logo from 'src/layouts/components/Logo' 
-
-// ** Layout Import
 import BlankLayout from '../../@core/layouts/BlankLayout'
-
-// ** Demo Imports
 import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
+import {app} from '../../configs/firebase'
+import "firebase/compat/auth"
 
 interface State {
+  email: string
   password: string
   showPassword: boolean
 }
 
-// ** Styled Components
+
 const Card = styled(MuiCard)<CardProps>(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '28rem' }
 }))
@@ -64,13 +53,12 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 }))
 
 const LoginPage = () => {
-  // ** State
   const [values, setValues] = useState<State>({
+    email: '',
     password: '',
     showPassword: false
   })
 
-  // ** Hook
   const theme = useTheme()
   const router = useRouter()
 
@@ -82,8 +70,17 @@ const LoginPage = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+  const handleSubmit = () => {
+    console.log('handleSubmit')
+    app.auth().signInWithEmailAndPassword(values.email, values.password)
+      .then((res: any) => {
+        console.log('res', res)
+        localStorage.setItem('user', JSON.stringify(res.user))
+        router.push('/feed')
+      })
+      .catch((error: any) => {
+        console.log(error)
+      })
   }
 
   return (
@@ -99,8 +96,9 @@ const LoginPage = () => {
             </Typography>
             <Typography variant='body2'>Please sign-in to your account and start the Learning </Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
+            <TextField autoFocus fullWidth id='email' label='Email'
+            onChange={handleChange('email')}
+            sx={{ marginBottom: 4 }} />
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
@@ -114,7 +112,6 @@ const LoginPage = () => {
                     <IconButton
                       edge='end'
                       onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
                       aria-label='toggle password visibility'
                     >
                       {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
@@ -136,7 +133,7 @@ const LoginPage = () => {
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
+              onClick={() => handleSubmit()}
             >
               Login
             </Button>
@@ -158,7 +155,6 @@ const LoginPage = () => {
                 </IconButton>
               </Link>
             </Box>
-          </form>
         </CardContent>
       </Card>
       <FooterIllustrationsV1 />

@@ -26,8 +26,13 @@ import themeConfig from 'src/configs/themeConfig'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
 import Logo from 'src/layouts/components/Logo'
+import {app} from '../../configs/firebase'
+import "firebase/compat/auth"
 
 interface State {
+  firstName: string
+  lastName: string
+  email: string
   password: string
   showPassword: boolean
 }
@@ -53,6 +58,9 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 
 const RegisterPage = () => {
   const [values, setValues] = useState<State>({
+    firstName: '',
+    lastName: '',
+    email: '',
     password: '',
     showPassword: false
   })
@@ -65,8 +73,15 @@ const RegisterPage = () => {
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+  const handleSubmit = () => {
+    app.auth().createUserWithEmailAndPassword(values.email, values.password)
+    .then((res) => {
+      console.log(res)
+      localStorage.setItem('user', JSON.stringify(res))
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   return (
@@ -97,8 +112,9 @@ const RegisterPage = () => {
             <Typography variant='body2'>Make your Learning easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='username' label='Username' sx={{ marginBottom: 4 }} />
-            <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} />
+            <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ marginBottom: 4 }} onChange={handleChange('firstName')} />
+            <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ marginBottom: 4 }} onChange={handleChange('lastName')} />
+            <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} onChange={handleChange('email')} />
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
@@ -112,7 +128,6 @@ const RegisterPage = () => {
                     <IconButton
                       edge='end'
                       onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
                       aria-label='toggle password visibility'
                     >
                       {values.showPassword ? <EyeOutline fontSize='small' /> : <EyeOffOutline fontSize='small' />}
@@ -121,7 +136,7 @@ const RegisterPage = () => {
                 }
               />
             </FormControl>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox />}
               label={
                 <Fragment>
@@ -133,8 +148,8 @@ const RegisterPage = () => {
                   </Link>
                 </Fragment>
               }
-            />
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }}>
+            /> */}
+            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7, mt:2 }} onClick={() => handleSubmit()}>
               Sign up
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
