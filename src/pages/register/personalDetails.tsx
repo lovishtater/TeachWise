@@ -56,7 +56,7 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
   }
 }))
 
-const RegisterPage = () => {
+const GetUserInfo = () => {
   const [values, setValues] = useState<State>({
     firstName: '',
     lastName: '',
@@ -72,16 +72,6 @@ const RegisterPage = () => {
   }
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword })
-  }
-  const handleSubmit = () => {
-    app.auth().createUserWithEmailAndPassword(values.email, values.password)
-    .then((res) => {
-      console.log(res)
-      localStorage.setItem('user', JSON.stringify(res))
-    })
-    .catch((err) => {
-      console.log(err)
-    })
   }
 
   return (
@@ -111,66 +101,12 @@ const RegisterPage = () => {
             </Typography>
             <Typography variant='body2'>Make your Learning easy and fun!</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
             <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ marginBottom: 4 }} onChange={handleChange('firstName')} />
             <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ marginBottom: 4 }} onChange={handleChange('lastName')} />
             <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} onChange={handleChange('email')} />
-            <FormControl fullWidth>
-              <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
-              <OutlinedInput
-                label='Password'
-                value={values.password}
-                id='auth-register-password'
-                onChange={handleChange('password')}
-                type={values.showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton
-                      edge='end'
-                      onClick={handleClickShowPassword}
-                      aria-label='toggle password visibility'
-                    >
-                      {values.showPassword ? <EyeOutline fontSize='small' /> : <EyeOffOutline fontSize='small' />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            {/* <FormControlLabel
-              control={<Checkbox />}
-              label={
-                <Fragment>
-                  <span>I agree to </span>
-                  <Link href='/' passHref>
-                    <LinkStyled onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                      privacy policy & terms
-                    </LinkStyled>
-                  </Link>
-                </Fragment>
-              }
-            /> */}
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7, mt:2 }} onClick={() => handleSubmit()}>
-              Sign up
+            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7, mt:2 }} onClick={() => alert('under construction')}>
+              Save & Continue
             </Button>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ marginRight: 2 }}>
-                Already have an account?
-              </Typography>
-              <Typography variant='body2'>
-                <Link passHref href='/login'>
-                  <LinkStyled>Sign in instead</LinkStyled>
-                </Link>
-              </Typography>
-            </Box>
-            <Divider sx={{ my: 5 }}>or</Divider>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                <img src='images/logos/google.png' alt='Google' height={24} />
-                </IconButton>
-              </Link>
-            </Box>
-          </form>
         </CardContent>
       </Card>
       <FooterIllustrationsV1 />
@@ -178,6 +114,6 @@ const RegisterPage = () => {
   )
 }
 
-RegisterPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+GetUserInfo.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default RegisterPage
+export default GetUserInfo
