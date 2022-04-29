@@ -71,16 +71,21 @@ const LoginPage = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     console.log('handleSubmit')
-    app.auth().signInWithEmailAndPassword(values.email, values.password)
+    await app.auth().signInWithEmailAndPassword(values.email, values.password)
     .then((res: any) => {
       console.log('res', res)
       localStorage.setItem('user', JSON.stringify(res.user))
-     firebase.auth().currentUser.getIdToken(true).then((res: any) => {
-        console.log('res1', res)
-        localStorage.setItem('token', res)
       })
+      .catch((error: any) => {
+        console.log(error)
+      })
+           const currUser = firebase.auth().currentUser;
+            if (currUser) {
+            await currUser.getIdToken(true).then(res => {
+             localStorage.setItem('token', res) 
+            }) 
         fetch( `${process.env.NEXT_PUBLIC_BACKEND}/api/signin`, {
           method: 'POST',
           headers: {
@@ -88,7 +93,7 @@ const LoginPage = () => {
             'authorization': `Bearer ${localStorage.getItem('token')}`
           },
           body: JSON.stringify({
-            email: res.user.email,
+            email: values.email,
             password: values.password
           })
         }).then(res => {
@@ -96,12 +101,10 @@ const LoginPage = () => {
         }).catch(err => {
           console.log('err', err)
         })
+      }
         router.push('/feed')
-      })
-      .catch((error: any) => {
-        console.log(error)
-      })
   }
+
 
   return (
     <Box className='content-center'>
