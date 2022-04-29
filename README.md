@@ -2,6 +2,8 @@
 
 The world of teaching is moving online. Our Idea is to make a freelance online teaching platform. We have been a student and we noticed a lot of problems in understanding some concepts. Our Idea is to make a freelance online platform where students can post about the topic/concept they want to learn or they are facing issues with, then our website will connect them to experienced tutors. The student has to set a fixed budget for the task and the required teacher can be matched accordingly. If both students and tutor are satisfied with each other then the payment will be released to the tutor.
 
+![Banner Teachwise](https://github.com/lovishtater/TeachWise/blob/lovishtater-patch-1/public/images/pages/teachwise_banner.jpg)
+
 ### Problems with current Online Educational Platforms:-
 1. Online courses are created in a beginner-friendly manner  If a student has partial knowledge then they might need to watch the whole course.
 2. If students want to learn an additional topic related to the concept they know then it is difficult to study on its own rather than someone mentoring it.
