@@ -8,16 +8,16 @@ import ShareVariant from 'mdi-material-ui/ShareVariant'
 import { Bookmark } from 'mdi-material-ui'
 import { Chip } from '@mui/material'
 
-const PostCard = () => {
+const PostCard = ({name, description,tags }: any) => {
   return (
     <Card 
-    sx={{border: 0, boxShadow: 2, color: 'common.black', backgroundColor: '#fff' , marginBottom: 4 }}>
+    sx={{border: 0, boxShadow: 2, color: 'common.black', backgroundColor: '#fff' , marginBottom: 4 , minWidth: '100%'}}>
       <CardContent sx={{ padding: theme => `${theme.spacing(3.25, 5, 4.5)} !important` }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
             <Avatar alt='Eugene Clarke' src='/images/avatars/1.png' sx={{ width: 35, height: 35, marginRight: 2.75 }} />
             <Typography variant='body1' sx={{ color: 'common.black' , fontWeight: 'bold'}}>
-              Lovish Tater
+              {name}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -30,20 +30,21 @@ const PostCard = () => {
           </Box>
         </Box>
         <Typography variant='body2' sx={{ marginBottom: 3, color: 'common.black', whiteSpace : 'pre-wrap' }}>
-            I am a react native developer based in Jaipur. 
-            My recent work includes building mobile apps and I want to learn working of GitLab CI/CD.
-            I am looking for a tutor in London.
+            {description}
         </Typography>
+        {tags.map((tag: any) => (
           <Chip
-          label="React Native"
+          label={tag}
           color="primary"
           sx={{
             height: 24,
             fontSize: '0.75rem',
+            margin: '0.25rem',
             textTransform: 'capitalize',
             '& .MuiChip-label': { fontWeight: 500 }
           }}
             />
+        ))}
       </CardContent>
     </Card>
   )

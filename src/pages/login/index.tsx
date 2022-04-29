@@ -26,6 +26,7 @@ import Logo from 'src/layouts/components/Logo'
 import BlankLayout from '../../@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
 import {app} from '../../configs/firebase'
+import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 
 interface State {
@@ -73,9 +74,28 @@ const LoginPage = () => {
   const handleSubmit = () => {
     console.log('handleSubmit')
     app.auth().signInWithEmailAndPassword(values.email, values.password)
-      .then((res: any) => {
-        console.log('res', res)
-        localStorage.setItem('user', JSON.stringify(res.user))
+    .then((res: any) => {
+      console.log('res', res)
+      localStorage.setItem('user', JSON.stringify(res.user))
+     firebase.auth().currentUser.getIdToken(true).then((res: any) => {
+        console.log('res1', res)
+        localStorage.setItem('token', res)
+      })
+        fetch( `${process.env.NEXT_PUBLIC_BACKEND}/api/signin`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({
+            email: res.user.email,
+            password: values.password
+          })
+        }).then(res => {
+          console.log('res', res)
+        }).catch(err => {
+          console.log('err', err)
+        })
         router.push('/feed')
       })
       .catch((error: any) => {
