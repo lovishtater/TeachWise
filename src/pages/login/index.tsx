@@ -71,39 +71,39 @@ const LoginPage = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const handleSubmit = async() => {
-    console.log('handleSubmit')
-    await app.auth().signInWithEmailAndPassword(values.email, values.password)
+const handleSubmit = async () => {
+  console.log("handleSubmit");
+  await app
+    .auth()
+    .signInWithEmailAndPassword(values.email, values.password)
     .then((res: any) => {
-      console.log('res', res)
-      localStorage.setItem('user', JSON.stringify(res.user))
-      })
-      .catch((error: any) => {
-        console.log(error)
-      })
-           const currUser = firebase.auth().currentUser;
-            if (currUser) {
-            await currUser.getIdToken(true).then(res => {
-             localStorage.setItem('token', res) 
-            }) 
-        fetch( `${process.env.NEXT_PUBLIC_BACKEND}/api/signin`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password
-          })
-        }).then(res => {
-          console.log('res', res)
-        }).catch(err => {
-          console.log('err', err)
-        })
-      }
-        router.push('/feed')
+      console.log("res", res);
+      localStorage.setItem("user", JSON.stringify(res.user));
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+  const currUser = firebase.auth().currentUser;
+  if (currUser) {
+    await currUser.getIdToken(true).then((res) => {
+      localStorage.setItem("token", res);
+    });
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    })
+      .then((res) => {console.log("res", res)})
+      .catch((err) => {console.log("err", err)});
   }
+  router.push("/feed");
+};
 
 
   return (
