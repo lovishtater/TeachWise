@@ -3,7 +3,6 @@ import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
-
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -28,6 +27,7 @@ import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
 import Logo from 'src/layouts/components/Logo'
 import {app} from '../../configs/firebase'
 import "firebase/compat/auth"
+import { useRouter } from 'next/router'
 
 interface State {
   firstName: string
@@ -57,6 +57,7 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 }))
 
 const RegisterPage = () => {
+  const router = useRouter()
   const [values, setValues] = useState<State>({
     firstName: '',
     lastName: '',
@@ -65,7 +66,6 @@ const RegisterPage = () => {
     showPassword: false
   })
 
-  const theme = useTheme()
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -78,6 +78,7 @@ const RegisterPage = () => {
     .then((res) => {
       console.log(res)
       localStorage.setItem('user', JSON.stringify(res))
+      router.push('/register/personalDetails')
     })
     .catch((err) => {
       console.log(err)
