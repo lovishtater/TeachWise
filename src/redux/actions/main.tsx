@@ -1,10 +1,15 @@
-import * as t from "../types";
+import {SET_POST} from "../types";
 import axios from "axios";
 // import { request } from "../../util/request";
 
-export const setInfo = (name:any) => (dispatch:any) => {
+export const setPost = (post:any) => (dispatch:any) => {
+
+  console.log("fetched data",post)
+
+  
+
   dispatch({
-    type: t.SET_NAME,
-    payload: name
+    type: SET_POST,
+    payload: name,
   });
 }

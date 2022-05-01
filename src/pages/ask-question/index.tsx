@@ -1,5 +1,7 @@
 // ** React Imports
 import { forwardRef, useState } from 'react'
+import { connect } from "react-redux"
+import {setPost} from '../../redux/actions/main'
 
 // ** MUI Imports
 import {
@@ -20,9 +22,32 @@ Autocomplete,
 Radio,
 } from '@mui/material'
 
-const CreatePost = () => {
+const CreatePost = (props:any) => {
+
+  const { initialState, setPost } = props
+
   // ** State
-  const [date, setDate] = useState<Date | null | undefined>(null)
+  const [values, setValues] = useState({
+    title: '',
+    description: '',
+    expertise: '',
+    language: [],
+    minimumFee: '',
+    maximumFee: '',
+    mode: '',
+    status: '',
+  })
+
+
+  const onSubmit = (e:any) => {
+    e.preventDefault()
+    console.log(values)
+    setPost(values);
+  }
+
+  const handleChange = (name:any) => (event:any) => {
+		setValues({ ...values, [name]: event.target.value });
+	};
 
   return (
       <Card>
@@ -36,6 +61,7 @@ const CreatePost = () => {
               fullWidth
               label="Title"
               variant="outlined"
+              onChange={handleChange('title')}
             />
           </Grid>
           <Grid item xs={12} >
@@ -45,6 +71,7 @@ const CreatePost = () => {
               label='Description'
               minRows={4}
               placeholder='Bio'
+              onChange={handleChange('Description')}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -72,17 +99,17 @@ const CreatePost = () => {
               options={Language}
               getOptionLabel={(option) => option}
               renderInput={(params) => (
-                <TextField {...params} label="Language" variant="outlined" />
+                <TextField {...params} label="Language" variant="outlined" onChange={handleChange('Language')} />
               )}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-            <TextField fullWidth type='number' label='Minimum Fee' placeholder='Minimum Fee' />
+            <TextField fullWidth type='number' label='Minimum Fee' placeholder='Minimum Fee' onChange={handleChange('minimumFee')} />
               </Grid>
               <Grid item xs={6}>
-            <TextField fullWidth type='number' label='Maximum Fee' placeholder='Maximum Fee' />
+            <TextField fullWidth type='number' label='Maximum Fee' placeholder='Maximum Fee' onChange={handleChange('maximumFee')} />
               </Grid>
               </Grid>
           </Grid>
@@ -90,16 +117,16 @@ const CreatePost = () => {
             <FormControl>
               <FormLabel>Mode</FormLabel>
               <RadioGroup row defaultValue='male' aria-label='gender' name='account-settings-info-radio'>
-                <FormControlLabel value='Online' label='Online' control={<Radio />} />
-                <FormControlLabel value='Offline' label='Offline' control={<Radio />} />
+                <FormControlLabel value='Online' label='Online' control={<Radio />} onClick={handleChange('mode')}/>
+                <FormControlLabel value='Offline' label='Offline' control={<Radio />} onClick={handleChange('mode')} />
               </RadioGroup>
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <Button variant='contained' sx={{ marginRight: 3.5 }}>
+            <Button variant='contained' sx={{ marginRight: 3.5 }} onClick={(e) => onSubmit(e)} >
               Post
             </Button>
-            <Button type='reset' variant='outlined' color='secondary' onClick={() => setDate(null)}>
+            <Button type='reset' variant='outlined' color='secondary'>
               Reset
             </Button>
           </Grid>
@@ -109,7 +136,15 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
+const mapStateToProps = (state:any) => {
+  return { props: state.post }
+ }
+ 
+ const mapDispatchToProps = {
+   setPost
+ }
+
+ export default connect(mapStateToProps, mapDispatchToProps)(CreatePost)
 
 const Language = [
   "English",

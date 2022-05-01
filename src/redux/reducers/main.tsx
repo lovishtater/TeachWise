@@ -1,13 +1,15 @@
-import * as t from "../types";
+import {SET_POST} from "../types";
 
-const main = (state = {
-    name: "guest",
-}, action:any) => {
+const initialState = {
+  posts: null,
+};
+
+const main = (state = initialState, action:any) => {
   switch(action.type){
-    case t.SET_NAME:
+    case SET_POST:
       return { 
         ...state,
-        name: action.payload
+        posts: action.payload
       };
     default:
       return {...state};
