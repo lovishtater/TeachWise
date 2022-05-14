@@ -13,11 +13,11 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Ask a question',
       path: '/ask-question'
     },
-    // {
-    //   title: 'Messages',
-    //   path: '/messages',
-    //   // openInNewTab: true
-    // },
+    {
+      title: 'Your Messages',
+      path: '/chat',
+      // openInNewTab: true
+    },
     // {
     //   title: 'Payments',
     //   path: '/payments',
