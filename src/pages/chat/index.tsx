@@ -31,9 +31,15 @@ const useStyles = makeStyles({
       borderRight: '1px solid #e0e0e0'
   },
   messageArea: {
-    height: '70vh',
+    minHeight: '60vh',
     overflowY: 'auto'
-  }
+  },
+  selfMessage: {
+    textAlign: 'right',
+  },
+    otherMessage: {
+    textAlign: 'left',
+    },
 });
 
 const Chat = () => {
@@ -59,58 +65,67 @@ const Chat = () => {
                             }}
                           />
                 </Grid>
-                <Divider />
                 <List>
-                    <ListItem button key="RemySharp">
+                    <ListItem button key="Lovish Tater">
                         <ListItemIcon>
-                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                            <Avatar alt="Lovish Tater" src="https://material-ui.com/static/images/avatar/1.jpg" />
                         </ListItemIcon>
-                        <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-                        <ListItemText secondary="online" align="right"></ListItemText>
+                        <ListItemText primary="Lovish Tater">Lovish Tater</ListItemText>
                     </ListItem>
-                    <ListItem button key="Alice">
+                <Divider />
+                    <ListItem button key="Manish">
                         <ListItemIcon>
-                            <Avatar alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                            <Avatar alt="Manish" src="https://material-ui.com/static/images/avatar/2.jpg" />
                         </ListItemIcon>
-                        <ListItemText primary="Alice">Alice</ListItemText>
+                        <ListItemText primary="Manish">Manish</ListItemText>
                     </ListItem>
-                    <ListItem button key="CindyBaker">
+                <Divider />
+                    <ListItem button key="Garima Jain">
                         <ListItemIcon>
-                            <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
+                            <Avatar alt="Garima Jain" src="https://material-ui.com/static/images/avatar/3.jpg" />
                         </ListItemIcon>
-                        <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
+                        <ListItemText primary="Garima Jain">Garima Jain</ListItemText>
                     </ListItem>
                 </List>
             </Grid>
             <Grid item xs={9}>
+                <Grid item xs={12} >
+                    <ListItem button key="Lovish Tater">
+                        <ListItemIcon>
+                            <Avatar alt="Lovish Tater" src="https://material-ui.com/static/images/avatar/5.jpg" />
+                        </ListItemIcon>
+                       <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Lovish Tater</Typography>
+                    </ListItem>
+                </Grid>
                 <List className={classes.messageArea}>
                     <ListItem key="1">
                         <Grid container>
                             <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
+                                <ListItemText  primary="Hey man, What's up ?"></ListItemText>
                             </Grid>
                             <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
+                                <ListItemText  secondary="09:30"></ListItemText>
                             </Grid>
                         </Grid>
                     </ListItem>
                     <ListItem key="2">
                         <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
+                            <Grid item xs={12} sx={{textAlign: 'right'}}>
+                                <ListItemText  primary="Hey, Iam Good! What about you ?">                                    
+                                </ListItemText>
+                                <ListItemText  secondary="09:31"></ListItemText>
                             </Grid>
                             <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:31"></ListItemText>
                             </Grid>
                         </Grid>
                     </ListItem>
                     <ListItem key="3">
                         <Grid container>
                             <Grid item xs={12}>
-                                <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
+                                <ListItemText  primary="Cool. i am good, let's catch up!"></ListItemText>
                             </Grid>
                             <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:30"></ListItemText>
+                                <ListItemText  secondary="10:30"></ListItemText>
                             </Grid>
                         </Grid>
                     </ListItem>
@@ -125,7 +140,7 @@ const Chat = () => {
                             sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4, my:0 } }}
                           />
                     </Grid>
-                    <Grid xs={1} align="right">
+                    <Grid xs={1} >
                         <Fab color="primary" aria-label="add">
                             <SendIcon />
                         </Fab>
