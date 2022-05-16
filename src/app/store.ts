@@ -26,6 +26,10 @@ const store = () => configureStore({
 });
 
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = any;
+export type AppDispatch = any;
 export const wrapper = createWrapper(store)
+
+//TO DO: add types to the reducers
+// export type RootState = ReturnType<typeof store.getState>
+// export type AppDispatch = typeof store.dispatch
