@@ -10,8 +10,12 @@ const navigation = (): VerticalNavItemsType => {
       sectionTitle: 'Students'
     },
     {
-      title: 'Ask a question',
+      title: 'Ask a Doubt',
       path: '/ask-question'
+    },
+    {
+      title: 'Doubt Status',
+      path: '/doubt-status'
     },
     {
       title: 'Your Messages',
