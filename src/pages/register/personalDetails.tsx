@@ -1,119 +1,207 @@
-
-import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode } from 'react'
-
-// ** Next Imports
-import Link from 'next/link'
-
-// ** MUI Components
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
-import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
-import MuiCard, { CardProps } from '@mui/material/Card'
-import InputAdornment from '@mui/material/InputAdornment'
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import themeConfig from 'src/configs/themeConfig'
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
-import Logo from 'src/layouts/components/Logo'
-import {app} from '../../configs/firebase'
-import "firebase/compat/auth"
+import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
+import { styled, useTheme } from "@mui/material/styles";
+import MuiCard, { CardProps } from "@mui/material/Card";
+import themeConfig from "src/configs/themeConfig";
+import BlankLayout from "src/@core/layouts/BlankLayout";
+import FooterIllustrationsV1 from "src/views/pages/FooterIllustration";
+import { Language, Expertise } from "src/configs/constants";
+import { Autocomplete, Grid } from "@mui/material";
+import { signUp } from "src/app/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
+import { useRouter } from "next/router";
 
 interface State {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  showPassword: boolean
+  firstName: string,
+  lastName: string,
+  bio: string,
+  language: any,
+  expertise: any,
+  teachFeeMin: number,
+  teachFeeMax: number,
+  teachAvgFee: number,
+  email: string,
+  password: string,
+  showPassword: boolean,
 }
 
-const Card = styled(MuiCard)<CardProps>(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: { width: '28rem' }
-}))
-
-const LinkStyled = styled('a')(({ theme }) => ({
-  fontSize: '0.875rem',
-  textDecoration: 'none',
-  color: theme.palette.primary.main
-}))
-
-const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
-  marginTop: theme.spacing(1.5),
-  marginBottom: theme.spacing(4),
-  '& .MuiFormControlLabel-label': {
-    fontSize: '0.875rem',
-    color: theme.palette.text.secondary
-  }
-}))
+const Card =
+  styled(MuiCard) <
+  CardProps >
+  (({ theme }) => ({
+    [theme.breakpoints.up("sm")]: { width: "28rem" },
+  }));
 
 const GetUserInfo = () => {
-  const [values, setValues] = useState<State>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    showPassword: false
-  })
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const {user, error} = useSelector((state: RootState) => state.auth);
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    bio: "",
+    language: [],
+    expertise: [],
+    teachFeeMax: null,
+    teachFeeMin: null,
+    teachAvgFee: null,
+  });
 
-  const theme = useTheme()
+  const handleChange = (prop: any) => (event: ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  const handleLanguageChange = (event: any) => {
+    setValues({ ...values, language: event });
+  };
 
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
+  const handleExpertiseChange = (event: any) => {
+    setValues({ ...values, expertise: event });
+  };
+
+  const handleSubmit = () => {
+    dispatch(signUp(values));
   }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      router.push("/feed");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }}, [error]);
+
 
   return (
-    <Box className='content-center'>
+    <Box className="content-center">
       <Card sx={{ zIndex: 1 }}>
-        <CardContent sx={{ padding: theme => `${theme.spacing(12, 9, 7)} !important` }}>
-          <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Logo />
-          </Box>
-          <Box sx={{ mb: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}> 
+        <CardContent sx={{ padding: (theme) => `${theme.spacing(12, 9, 7)} !important` }}>
+          <Box sx={{ mb: 6, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
             <Typography
-              variant='h6'
+              variant="h6"
               sx={{
                 ml: 3,
                 lineHeight: 1,
                 fontWeight: 600,
-                textTransform: 'uppercase',
-                fontSize: '1.5rem !important'
+                textTransform: "uppercase",
+                fontSize: "1.5rem !important",
               }}
             >
-              {themeConfig.appName}
+              <img src="/logo.png" alt="logo" height="25px" />
+              {themeConfig.appName.slice(1)}
+            </Typography>
+            <Typography variant="h5" sx={{ fontWeight: 400, my: 2 }}>
+              Create your account
             </Typography>
           </Box>
-          <Box sx={{ mb: 6 }}>
-            <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Learning starts here 🚀
-            </Typography>
-            <Typography variant='body2'>Make your Learning easy and fun!</Typography>
-          </Box>
-            <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ marginBottom: 4 }} onChange={handleChange('firstName')} />
-            <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ marginBottom: 4 }} onChange={handleChange('lastName')} />
-            <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} onChange={handleChange('email')} />
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7, mt:2 }} onClick={() => alert('under construction')}>
-              Save & Continue
-            </Button>
+          <Grid container >
+            <Grid item xs={12} sm={6}>
+           <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ my: 2, mr: 2 }} onChange={handleChange('firstName')} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+            <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ my: 2, ml: 2 }} onChange={handleChange('lastName')} />
+            </Grid>
+            <Grid item xs={12}>
+          <Autocomplete
+            id="expertise"
+            options={Expertise}
+            multiple
+            disableCloseOnSelect
+            getOptionLabel={(option) => option}
+            onChange={(event, newValue) => handleExpertiseChange(newValue)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Expertise"
+                variant="outlined"
+                sx={{ marginBottom: 4 }}
+                onChange={handleChange("expertise")}
+              />
+            )}
+          />
+            </Grid>
+            <Grid item xs={12}>
+          <Autocomplete
+            id="language"
+            multiple
+            options={Language}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option}
+            onChange={(event, newValue) => {
+              handleLanguageChange(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Language known" variant="outlined" sx={{ marginBottom: 2 }} />
+            )}
+          />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                id="teachFeeMin"
+                label="Min. Teach Fee"
+                type="number"
+                sx={{ my: 2, mr: 2 }}
+                onChange={handleChange("teachFeeMin")}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                id="teachFeeMax"
+                label="Max. Teach Fee"
+                type="number"
+                sx={{ my: 2, ml: 2 }}
+                onChange={handleChange("teachFeeMax")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+          <TextField
+            id="teachAvgFee"
+            fullWidth
+            label="Teach Avg. Fee"
+            type="number"
+            sx={{ marginBottom: 4, mt: 2 }}
+            onChange={handleChange("teachAvgFee")}
+          />
+            </Grid>
+            <Grid item xs={12}>
+          <TextField
+            minRows={3}
+            multiline
+            autoFocus
+            fullWidth
+            id="bio"
+            label="bio"
+            sx={{ marginBottom: 4 }}
+            onChange={handleChange("bio")}
+          />
+            </Grid>
+            <Grid item xs={12}>
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            sx={{ marginBottom: 7, mt: 2 }}
+            onClick={() => handleSubmit()}
+          >
+            Save & Continue
+          </Button>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
       <FooterIllustrationsV1 />
     </Box>
-  )
-}
+  );
+};
 
-GetUserInfo.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+GetUserInfo.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>;
 
-export default GetUserInfo
+export default GetUserInfo;

@@ -1,5 +1,5 @@
 
-import { ChangeEvent, MouseEvent, ReactNode, useState } from 'react'
+import { ChangeEvent, useEffect , ReactNode, useState } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -25,8 +25,13 @@ import themeConfig from '../../configs/themeConfig'
 import Logo from 'src/layouts/components/Logo' 
 import BlankLayout from '../../@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
 import {app} from '../../configs/firebase'
+import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
+import { signIn } from 'src/app/actions/auth'
+import { Alert } from '@mui/material'
 
 interface State {
   email: string
@@ -53,6 +58,9 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 }))
 
 const LoginPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const {user, error} = useSelector((state: RootState) => state.auth);
+  const [displayError, setError] = useState('');
   const [values, setValues] = useState<State>({
     email: '',
     password: '',
@@ -70,18 +78,27 @@ const LoginPage = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const handleSubmit = () => {
-    console.log('handleSubmit')
-    app.auth().signInWithEmailAndPassword(values.email, values.password)
-      .then((res: any) => {
-        console.log('res', res)
-        localStorage.setItem('user', JSON.stringify(res.user))
-        router.push('/feed')
-      })
-      .catch((error: any) => {
-        console.log(error)
-      })
+const handleSubmit = async () => {
+  setError('');
+  if (values.email && values.password) {
+    await dispatch(signIn(values));
+  } else {
+    setError('Please fill all fields');
   }
+};
+
+useEffect(() => {
+  if (user) {
+    router.push("/feed");
+  }
+}, [user])
+
+useEffect(() => {
+  if (error) {
+    setError(error);
+  }
+}, [error])
+
 
   return (
     <Box className='content-center'>
@@ -105,6 +122,7 @@ const LoginPage = () => {
                 label='Password'
                 value={values.password}
                 id='auth-login-password'
+                 sx={{ marginBottom: 4 }}
                 onChange={handleChange('password')}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
@@ -120,6 +138,7 @@ const LoginPage = () => {
                 }
               />
             </FormControl>
+            { error && <Alert severity='error'>{displayError}</Alert> }
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >

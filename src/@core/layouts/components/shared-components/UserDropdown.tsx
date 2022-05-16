@@ -1,10 +1,5 @@
-
-import { useState, SyntheticEvent, Fragment } from 'react'
-
-// ** Next Import
+import { useState, SyntheticEvent, Fragment, useEffect } from 'react'
 import { useRouter } from 'next/router'
-
-
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import Badge from '@mui/material/Badge'
@@ -15,8 +10,10 @@ import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
+import { logout } from "src/app/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
 
-// ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
   width: 8,
   height: 8,
@@ -26,10 +23,10 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 }))
 
 const UserDropdown = () => {
-  // ** States
+  const dispatch = useDispatch<AppDispatch>();
+  const {user, error} = useSelector((state: RootState) => state.auth);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
 
-  // ** Hooks
   const router = useRouter()
 
   const handleDropdownOpen = (event: SyntheticEvent) => {
@@ -42,6 +39,10 @@ const UserDropdown = () => {
     }
     setAnchorEl(null)
   }
+  useEffect(() => {
+    if (!user) {
+      router.push('/login')
+    }}, [user])
 
   const styles = {
     py: 2,
@@ -106,7 +107,7 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/login')}>
+        <MenuItem sx={{ py: 2 }} onClick={() => dispatch(logout())}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>

@@ -52,13 +52,47 @@ const Feed: NextPage = () => {
           reset
         </Button>
         </div>
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
+            <PostCard
+            name="Lovish Tater"
+            description="I am 8th grade student in the school. I have Maths test tommorow and I am urgently looking for a teacher to teach me permutations and combinations. I already have knowledge of basics of permutations and combinations but I want to learn advance exercise of NCERT"
+            tags={['Maths', 'NCERT']}
+            />
+            <PostCard 
+            name="Manish Motwani"
+            description="I have 3+ years of experience in software development using c++. I want to learn a Golang for my project. I already have a good knowledge of basic programming hence I dont want to start from scratch."
+            tags={['golang', 'c++']}
+            />
+            <PostCard
+            name="Garima Jain"
+            description="I am an intermediate level Javascript developer. I want to learn Typescript"
+            tags={['javascript', 'typescript']}
+            />
+            <PostCard 
+            name="Lavesh Garg"
+            description="I am a advance level java developer. I want to learn a springboot java framework for my project."
+            tags={['java', 'springboot']}
+            />
+            <PostCard
+            name="Lovish Tater"
+            description="I am 8th grade student in the school. I have Maths test tommorow and I am urgently looking for a teacher to teach me permutations and combinations. I already have knowledge of basics of permutations and combinations but I want to learn advance exercise of NCERT"
+            tags={['Maths', 'NCERT']}
+            />
+            <PostCard 
+            name="Manish Motwani"
+            description="I have 3+ years of experience in software development using c++. I want to learn a Golang for my project. I already have a good knowledge of basic programming hence I dont want to start from scratch."
+            tags={['golang', 'c++']}
+            />
+            <PostCard
+            name="Garima Jain"
+            description="I am an intermediate level Javascript developer. I want to learn Typescript and higher order functions in javascript"
+            tags={['javascript', 'typescript']}
+            />
+            
+            <PostCard 
+            name="Lavesh Garg"
+            description="I am a advance level java developer. I want to learn a springboot java framework for my project."
+            tags={['java', 'springboot']}
+            />
           </Grid>
           <Grid item sm={6} md={3}>
             </Grid>

@@ -10,14 +10,18 @@ const navigation = (): VerticalNavItemsType => {
       sectionTitle: 'Students'
     },
     {
-      title: 'Ask a question',
+      title: 'Ask a Doubt',
       path: '/ask-question'
     },
-    // {
-    //   title: 'Messages',
-    //   path: '/messages',
-    //   // openInNewTab: true
-    // },
+    {
+      title: 'Doubt Status',
+      path: '/doubt-status'
+    },
+    {
+      title: 'Your Messages',
+      path: '/chat',
+      // openInNewTab: true
+    },
     // {
     //   title: 'Payments',
     //   path: '/payments',
