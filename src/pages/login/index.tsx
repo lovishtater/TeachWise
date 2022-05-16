@@ -1,5 +1,5 @@
 
-import { ChangeEvent, MouseEvent, ReactNode, useState } from 'react'
+import { ChangeEvent, useEffect , ReactNode, useState } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -25,9 +25,13 @@ import themeConfig from '../../configs/themeConfig'
 import Logo from 'src/layouts/components/Logo' 
 import BlankLayout from '../../@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
 import {app} from '../../configs/firebase'
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
+import { signIn } from 'src/app/actions/auth'
+import { Alert } from '@mui/material'
 
 interface State {
   email: string
@@ -54,6 +58,9 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 }))
 
 const LoginPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const {user, error} = useSelector((state: RootState) => state.auth);
+  const [displayError, setError] = useState('');
   const [values, setValues] = useState<State>({
     email: '',
     password: '',
@@ -72,38 +79,25 @@ const LoginPage = () => {
   }
 
 const handleSubmit = async () => {
-  console.log("handleSubmit");
-  await app
-    .auth()
-    .signInWithEmailAndPassword(values.email, values.password)
-    .then((res: any) => {
-      console.log("res", res);
-      localStorage.setItem("user", JSON.stringify(res.user));
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-  const currUser = firebase.auth().currentUser;
-  if (currUser) {
-    await currUser.getIdToken(true).then((res) => {
-      localStorage.setItem("token", res);
-    });
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-      }),
-    })
-      .then((res) => {console.log("res", res)})
-      .catch((err) => {console.log("err", err)});
+  setError('');
+  if (values.email && values.password) {
+    await dispatch(signIn(values));
+  } else {
+    setError('Please fill all fields');
   }
-  router.push("/feed");
 };
+
+useEffect(() => {
+  if (user) {
+    router.push("/feed");
+  }
+}, [user])
+
+useEffect(() => {
+  if (error) {
+    setError(error);
+  }
+}, [error])
 
 
   return (
@@ -128,6 +122,7 @@ const handleSubmit = async () => {
                 label='Password'
                 value={values.password}
                 id='auth-login-password'
+                 sx={{ marginBottom: 4 }}
                 onChange={handleChange('password')}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
@@ -143,6 +138,7 @@ const handleSubmit = async () => {
                 }
               />
             </FormControl>
+            { error && <Alert severity='error'>{displayError}</Alert> }
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >

@@ -11,7 +11,7 @@ import BlankLayout from "src/@core/layouts/BlankLayout";
 import FooterIllustrationsV1 from "src/views/pages/FooterIllustration";
 import { Language, Expertise } from "src/configs/constants";
 import { Autocomplete, Grid } from "@mui/material";
-import { userSignup } from "src/app/actions/auth";
+import { signUp } from "src/app/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from 'src/app/store';
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ const Card =
 const GetUserInfo = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const {user, error} = useSelector((state: RootState) => state.auth);
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -64,7 +64,7 @@ const GetUserInfo = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(userSignup(values));
+    dispatch(signUp(values));
   }
   useEffect(() => {
     if (user) {
@@ -72,6 +72,13 @@ const GetUserInfo = () => {
       router.push("/feed");
     }
   }, [user]);
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }}, [error]);
+
+
   return (
     <Box className="content-center">
       <Card sx={{ zIndex: 1 }}>

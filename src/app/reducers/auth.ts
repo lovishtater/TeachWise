@@ -1,37 +1,38 @@
 import {
-USER_SIGNUP_REQUEST,
-USER_SIGNUP_SUCCESS,
-USER_SIGNUP_FAIL,
-USER_SIGNIN_REQUEST,
-USER_SIGNIN_SUCCESS,
-USER_SIGNIN_FAIL,
-USER_LOGOUT,
-USER_SIGNOUT_REQUEST,
-USER_SIGNOUT_SUCCESS,
-USER_SIGNOUT_FAIL,
+USER_AUTH_REQUEST,
+USER_AUTH_SUCCESS,
+USER_AUTH_FAIL,
+USER_AUTH_LOGOUT
 } from '../constants/auth';
 
 
-export const userSignup =  (state = {}, action: any) => {
+export const authReducer =  (state = {}, action: any) => {
     switch (action.type) {
-        case USER_SIGNUP_REQUEST:
+        case USER_AUTH_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                isError: false,
+                error: null,
             };
-        case USER_SIGNUP_SUCCESS:
+        case USER_AUTH_SUCCESS:
             return {
                 ...state,
-                isLoading: false,
-                isError: false,
+                error: null,
                 user: action.payload,
+                isLoading: false,
             };
-        case USER_SIGNUP_FAIL:
+        case USER_AUTH_FAIL:
             return {
                 ...state,
                 isLoading: false,
-                isError: true,
+                error: action.payload,
+            };
+        case USER_AUTH_LOGOUT:
+            return {
+                ...state,
+                user: null,
+                error: null,
+                isLoading: false,
             };
         default:
             return state;

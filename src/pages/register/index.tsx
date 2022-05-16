@@ -26,12 +26,12 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
 import Logo from 'src/layouts/components/Logo'
 import {app} from '../../configs/firebase'
+import { Alert } from '@mui/material'
+
 import "firebase/compat/auth"
 import { useRouter } from 'next/router'
 
 interface State {
-  firstName: string
-  lastName: string
   email: string
   password: string
   showPassword: boolean
@@ -58,9 +58,8 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 
 const RegisterPage = () => {
   const router = useRouter()
+  const [error, setError] = useState('');
   const [values, setValues] = useState<State>({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
     showPassword: false
@@ -74,14 +73,18 @@ const RegisterPage = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
   const handleSubmit = () => {
+    setError('');
+    if (!values.email || !values.password) {setError('Please fill all fields')
+  }else {
     app.auth().createUserWithEmailAndPassword(values.email, values.password)
     .then((res) => {
       localStorage.setItem('tempUser', JSON.stringify(res.user))
       router.push('/register/personalDetails')
     })
     .catch((err) => {
-      console.log(err)
+      setError(err.message)
     })
+  }
   }
 
   return (
@@ -120,6 +123,7 @@ const RegisterPage = () => {
                 value={values.password}
                 id='auth-register-password'
                 onChange={handleChange('password')}
+                sx={{ marginBottom: 4 }}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
@@ -134,6 +138,7 @@ const RegisterPage = () => {
                 }
               />
             </FormControl>
+             { error && <Alert severity='error'>{error}</Alert> }
             {/* <FormControlLabel
               control={<Checkbox />}
               label={

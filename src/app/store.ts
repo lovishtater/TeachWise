@@ -2,20 +2,20 @@ import { applyMiddleware, combineReducers, compose } from "redux"
 import {configureStore } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
 import { createWrapper } from "next-redux-wrapper"
-import { userSignup } from "./reducers/auth"
+import { authReducer } from "./reducers/auth"
 const middleware = [thunk]
 
 
 //old code 
 // const makeStore = () => createStore(rootReducer, compose(applyMiddleware(...middleware)))
 const reducer = combineReducers({
-    auth : userSignup
+    auth : authReducer
 })
 
 const initialState = {
     auth : {
         isLoading : false,
-        isError : false,
+        error : null,
         user : null,
     }
 };

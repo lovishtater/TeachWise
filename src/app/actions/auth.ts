@@ -1,89 +1,94 @@
 import axios from 'axios';
 import {
-USER_SIGNUP_REQUEST,
-USER_SIGNUP_SUCCESS,
-USER_SIGNUP_FAIL,
-USER_SIGNIN_REQUEST,
-USER_SIGNIN_SUCCESS,
-USER_SIGNIN_FAIL,
-USER_LOGOUT,
-USER_SIGNOUT_REQUEST,
-USER_SIGNOUT_SUCCESS,
-USER_SIGNOUT_FAIL,
+USER_AUTH_REQUEST,
+USER_AUTH_SUCCESS,
+USER_AUTH_FAIL,
+USER_AUTH_LOGOUT
 } from '../constants/auth';
 
 import {app} from '../../configs/firebase'
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 
-export const userSignup =  (values:any) => async (dispatch: any) => {
+export const signUp =  (values:any) => async (dispatch: any) => {
     try{
     dispatch({
-        type: USER_SIGNUP_REQUEST,
+        type: USER_AUTH_REQUEST,
     });
     const googleResponse = localStorage.getItem('tempUser') ? JSON.parse(localStorage.getItem('tempUser') as string) : null;
+    const currUser = firebase.auth().currentUser;
     const user = {
         ...values,
         email : googleResponse.email,
         googleUid : googleResponse.uid,
     }
-    const currUser = firebase.auth().currentUser;
-    await currUser?.getIdToken(true).then((res) => {
-      localStorage.setItem("token", res);
-    });
+    const token = await currUser?.getIdToken(true);
     const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/signup`, 
     user, {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${token}`
         }
     });
     localStorage.removeItem('tempUser');
-    localStorage.setItem('TeachWiseUser', JSON.stringify({...response.data.user, ...googleResponse}));
+        localStorage.setItem('teachWiseUser', JSON.stringify(response.data));
+        localStorage.setItem('teachWiseToken', JSON.stringify(googleResponse.user));
     dispatch({
-        type: USER_SIGNUP_SUCCESS,
+        type: USER_AUTH_SUCCESS,
         payload: {...response.data.user, ...googleResponse},
     });
     }catch(error : any){
         dispatch({
-            type: USER_SIGNUP_FAIL,
+            type: USER_AUTH_FAIL,
             payload: error.message,
         });
     }
 }
 
-export const userSignin = (user:any) => async (dispatch: any) => {
+export const signIn = ({email, password} : any) => async (dispatch: any) => {
     try{
     dispatch({
-        type: USER_SIGNIN_REQUEST,
+        type: USER_AUTH_REQUEST,
     });
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/signin`, user);
-    dispatch({
-        type: USER_SIGNIN_SUCCESS,
+    
+    const googleResponse = await app.auth().signInWithEmailAndPassword(email, password);
+    const currUser = firebase.auth().currentUser;
+    const token = await currUser?.getIdToken(true)
+    const data = { 
+        email: email,
+        googleUid : googleResponse ? googleResponse.user?.uid : null,
+    }
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/signin`,data , {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }});
+        localStorage.setItem('teachWiseUser', JSON.stringify(response.data));
+        localStorage.setItem('teachWiseToken', JSON.stringify(googleResponse.user));
+        dispatch({
+        type: USER_AUTH_SUCCESS,
         payload: response.data,
     });
     }catch(error : any){
         dispatch({
-            type: USER_SIGNIN_FAIL,
+            type: USER_AUTH_FAIL,
             payload: error.message,
         });
     }
 }
 
 
-export const userLogout = (user:any) => async (dispatch: any) => {
+export const logout = () => async (dispatch: any) => {
     try{
+        await app.auth().signOut();
+        localStorage.removeItem('teachWiseUser');
+        localStorage.removeItem('teachWiseToken');
     dispatch({
-        type: USER_SIGNOUT_REQUEST,
-    });
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/signout`, user);
-    dispatch({
-        type: USER_SIGNOUT_SUCCESS,
-        payload: response.data,
+        type: USER_AUTH_LOGOUT,
     });
     }catch(error : any){
         dispatch({
-            type: USER_SIGNOUT_FAIL,
+            type: USER_AUTH_FAIL,
             payload: error.message,
         });
     }
