@@ -12,17 +12,16 @@ const reducer = combineReducers({
     auth : authReducer
 })
 
-const initialState = {
-    auth : {
-        isLoading : false,
-        error : null,
-        user : null,
-    }
-};
+// const initialState = {
+//     auth : {
+//         isLoading : false,
+//         error : null,
+//         user : null,
+//     }
+// };
 
 const store = () => configureStore({
     reducer,
-    initialState,
     middleware
 });
 
