@@ -76,8 +76,7 @@ const RegisterPage = () => {
   const handleSubmit = () => {
     app.auth().createUserWithEmailAndPassword(values.email, values.password)
     .then((res) => {
-      console.log(res)
-      localStorage.setItem('user', JSON.stringify(res))
+      localStorage.setItem('tempUser', JSON.stringify(res.user))
       router.push('/register/personalDetails')
     })
     .catch((err) => {
@@ -113,8 +112,6 @@ const RegisterPage = () => {
             <Typography variant='body2'>Make your Learning easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ marginBottom: 4 }} onChange={handleChange('firstName')} />
-            <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ marginBottom: 4 }} onChange={handleChange('lastName')} />
             <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} onChange={handleChange('email')} />
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
