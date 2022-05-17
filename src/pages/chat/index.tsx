@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef,useState,useEffect} from 'react';
 import { makeStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -15,6 +15,10 @@ import Fab from '@mui/material/Fab';
 import SendIcon from 'mdi-material-ui/Send';
 import InputAdornment from '@mui/material/InputAdornment'
 import Magnify from 'mdi-material-ui/Magnify'
+import {io} from 'socket.io-client';
+import type { RootState, AppDispatch } from 'src/app/store';
+import {  useSelector } from "react-redux";
+import { AnySet } from 'immer/dist/internal';
 
 const useStyles = makeStyles({
   table: {
@@ -43,7 +47,77 @@ const useStyles = makeStyles({
 });
 
 const Chat = () => {
+
+  const {user} = useSelector((state: RootState) => state.auth);
+  const [conversations, setConversations] = useState<any>([]);
+  const [currentChat, setCurrentChat] = useState<any>({user: {
+    _id: '6283cfe27d42185f4ee20732',
+  }  });
+  const [messages, setMessages] = useState<any>([]);
+  const [newMessage, setNewMessage] = useState<any>("");
+  const [arrivalMessage, setArrivalMessage] = useState<any>("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
   const classes = useStyles();
+  const socket:any = useRef();
+
+  console.log("user is",user)
+
+  // const {_id} = user
+
+  useEffect(() => {
+
+    console.log("working..")
+
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data:any) => {
+
+      console.log("getMessage Data",data)
+
+      setArrivalMessage({
+        sender: data?.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users:any) => {
+      console.log(users);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    arrivalMessage && currentChat &&
+      currentChat?.members?.includes(arrivalMessage.sender) &&
+      setMessages((prev:any) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  const handleSubmit = async (e:any) => {
+
+    e.preventDefault();
+    const message = {
+      sender: user._id,
+      text: newMessage,
+      conversationId: currentChat.user._id,
+    };
+
+    console.log("currentChat",currentChat);
+
+    const receiverId = "6283cfe27d42185f4ee20732";
+
+    // const receiverId = currentChat.members.find(
+    //   (member:any) => member !== user._id
+    // );
+
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+    console.log("end");
+  };
 
   return (
       <div>
@@ -52,7 +126,7 @@ const Chat = () => {
             <Grid item xs={3} className={classes.borderRight500}>
                 <Grid item xs={12} style={{padding: '10px'}}>
                           <TextField
-                            size='small'
+                            size= 'small'
                             fullWidth
                             placeholder='Search'
                             sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4, my:0 } }}
@@ -133,15 +207,21 @@ const Chat = () => {
                 <Divider />
                 <Grid container style={{padding: '20px'}}>
                     <Grid item xs={11}>
+
                     <TextField
                             size='small'
                             placeholder='Type your message'
                             fullWidth
                             sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4, my:0 } }}
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
                           />
+
                     </Grid>
                     <Grid xs={1} >
-                        <Fab color="primary" aria-label="add">
+                        <Fab color="primary" aria-label="add" 
+                        onClick={(e) => {handleSubmit(e)}}>
+                        
                             <SendIcon />
                         </Fab>
                     </Grid>
