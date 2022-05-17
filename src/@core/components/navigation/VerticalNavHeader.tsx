@@ -13,7 +13,7 @@ import Typography, { TypographyProps } from '@mui/material/Typography'
 import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/@core/configs/themeConfig'
 
 interface Props {
   hidden: boolean

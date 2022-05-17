@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import Magnify from 'mdi-material-ui/Magnify'
-import PostCard from "src/views/cards/PostCard";
+import PostCard from "src/@core/components/cards/PostCard";
 
   const grid = {
             justifyContent: 'center',
