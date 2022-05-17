@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import ShareVariant from 'mdi-material-ui/ShareVariant'
 import { Bookmark } from 'mdi-material-ui'
-import { Chip } from '@mui/material'
+import { Chip, Button, Grid } from '@mui/material'
 
 const PostCard = ({name, description,tags }: any) => {
   return (
@@ -32,6 +32,8 @@ const PostCard = ({name, description,tags }: any) => {
         <Typography variant='body2' sx={{ marginBottom: 3, color: 'common.black', whiteSpace : 'pre-wrap' }}>
             {description}
         </Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ mr: 2}}>
         {tags.map((tag: any) => (
           <Chip
           label={tag}
@@ -45,6 +47,14 @@ const PostCard = ({name, description,tags }: any) => {
           }}
             />
         ))}
+          </Box>
+           <Box>
+            <Button variant='outlined' color='primary' sx={{ fontSize: '0.75rem', fontWeight: 500, padding: '0.25rem 0.5rem', borderRadius: '0.25rem' , marginTop : '0.25rem '}}>
+              Lets Solve
+            </Button>
+          </Box>
+        </Box>
+
       </CardContent>
     </Card>
   )
