@@ -1,9 +1,4 @@
-import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode } from "react";
-
-// ** Next Imports
-import Link from "next/link";
-
-// ** MUI Components
+import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -14,14 +9,22 @@ import MuiCard, { CardProps } from "@mui/material/Card";
 import themeConfig from "src/configs/themeConfig";
 import BlankLayout from "src/@core/layouts/BlankLayout";
 import FooterIllustrationsV1 from "src/views/pages/FooterIllustration";
-import MuiFormControlLabel, { FormControlLabelProps } from "@mui/material/FormControlLabel";
-import Logo from "src/layouts/components/Logo";
 import { Language, Expertise } from "src/configs/constants";
 import { Autocomplete, Grid } from "@mui/material";
+import { signUp } from "src/app/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
+import { useRouter } from "next/router";
 
 interface State {
   firstName: string,
   lastName: string,
+  bio: string,
+  language: any,
+  expertise: any,
+  teachFeeMin: number,
+  teachFeeMax: number,
+  teachAvgFee: number,
   email: string,
   password: string,
   showPassword: boolean,
@@ -34,43 +37,23 @@ const Card =
     [theme.breakpoints.up("sm")]: { width: "28rem" },
   }));
 
-const LinkStyled = styled("a")(({ theme }) => ({
-  fontSize: "0.875rem",
-  textDecoration: "none",
-  color: theme.palette.primary.main,
-}));
-
-const FormControlLabel =
-  styled(MuiFormControlLabel) <
-  FormControlLabelProps >
-  (({ theme }) => ({
-    marginTop: theme.spacing(1.5),
-    marginBottom: theme.spacing(4),
-    "& .MuiFormControlLabel-label": {
-      fontSize: "0.875rem",
-      color: theme.palette.text.secondary,
-    },
-  }));
-
 const GetUserInfo = () => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const {user, error} = useSelector((state: RootState) => state.auth);
   const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
     bio: "",
-    googleUid: "",
     language: [],
     expertise: [],
-    teachFeeMax: "",
-    teachFeeMin: "",
-    teachAvgFee: "",
-    showPassword: false,
+    teachFeeMax: null,
+    teachFeeMin: null,
+    teachAvgFee: null,
   });
-
-  const theme = useTheme();
 
   const handleChange = (prop: any) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
-  };
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
   };
   const handleLanguageChange = (event: any) => {
     setValues({ ...values, language: event });
@@ -79,6 +62,23 @@ const GetUserInfo = () => {
   const handleExpertiseChange = (event: any) => {
     setValues({ ...values, expertise: event });
   };
+
+  const handleSubmit = () => {
+    dispatch(signUp(values));
+  }
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      router.push("/feed");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }}, [error]);
+
+
   return (
     <Box className="content-center">
       <Card sx={{ zIndex: 1 }}>
@@ -101,6 +101,14 @@ const GetUserInfo = () => {
               Create your account
             </Typography>
           </Box>
+          <Grid container >
+            <Grid item xs={12} sm={6}>
+           <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ my: 2, mr: 2 }} onChange={handleChange('firstName')} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+            <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ my: 2, ml: 2 }} onChange={handleChange('lastName')} />
+            </Grid>
+            <Grid item xs={12}>
           <Autocomplete
             id="expertise"
             options={Expertise}
@@ -118,6 +126,8 @@ const GetUserInfo = () => {
               />
             )}
           />
+            </Grid>
+            <Grid item xs={12}>
           <Autocomplete
             id="language"
             multiple
@@ -128,10 +138,10 @@ const GetUserInfo = () => {
               handleLanguageChange(newValue);
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Language known" variant="outlined" sx={{ marginBottom: 4 }} />
+              <TextField {...params} label="Language known" variant="outlined" sx={{ marginBottom: 2 }} />
             )}
           />
-          <Grid container>
+            </Grid>
             <Grid item xs={6}>
               <TextField
                 id="teachFeeMin"
@@ -150,7 +160,7 @@ const GetUserInfo = () => {
                 onChange={handleChange("teachFeeMax")}
               />
             </Grid>
-          </Grid>
+            <Grid item xs={12}>
           <TextField
             id="teachAvgFee"
             fullWidth
@@ -159,6 +169,8 @@ const GetUserInfo = () => {
             sx={{ marginBottom: 4, mt: 2 }}
             onChange={handleChange("teachAvgFee")}
           />
+            </Grid>
+            <Grid item xs={12}>
           <TextField
             minRows={3}
             multiline
@@ -169,16 +181,20 @@ const GetUserInfo = () => {
             sx={{ marginBottom: 4 }}
             onChange={handleChange("bio")}
           />
+            </Grid>
+            <Grid item xs={12}>
           <Button
             fullWidth
             size="large"
             type="submit"
             variant="contained"
             sx={{ marginBottom: 7, mt: 2 }}
-            onClick={() => alert("under construction")}
+            onClick={() => handleSubmit()}
           >
             Save & Continue
           </Button>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
       <FooterIllustrationsV1 />

@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
     "rootDir": "src",
     "outDir": "../javascript-version/src",
     "target": "esnext",

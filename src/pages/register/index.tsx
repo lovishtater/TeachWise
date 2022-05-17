@@ -26,12 +26,12 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
 import Logo from 'src/layouts/components/Logo'
 import {app} from '../../configs/firebase'
+import { Alert } from '@mui/material'
+
 import "firebase/compat/auth"
 import { useRouter } from 'next/router'
 
 interface State {
-  firstName: string
-  lastName: string
   email: string
   password: string
   showPassword: boolean
@@ -58,9 +58,8 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 
 const RegisterPage = () => {
   const router = useRouter()
+  const [error, setError] = useState('');
   const [values, setValues] = useState<State>({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
     showPassword: false
@@ -74,15 +73,18 @@ const RegisterPage = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
   const handleSubmit = () => {
+    setError('');
+    if (!values.email || !values.password) {setError('Please fill all fields')
+  }else {
     app.auth().createUserWithEmailAndPassword(values.email, values.password)
     .then((res) => {
-      console.log(res)
-      localStorage.setItem('user', JSON.stringify(res))
+      localStorage.setItem('tempUser', JSON.stringify(res.user))
       router.push('/register/personalDetails')
     })
     .catch((err) => {
-      console.log(err)
+      setError(err.message)
     })
+  }
   }
 
   return (
@@ -113,8 +115,6 @@ const RegisterPage = () => {
             <Typography variant='body2'>Make your Learning easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='firstname' label='First name' sx={{ marginBottom: 4 }} onChange={handleChange('firstName')} />
-            <TextField autoFocus fullWidth id='lastname' label='Last name' sx={{ marginBottom: 4 }} onChange={handleChange('lastName')} />
             <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} onChange={handleChange('email')} />
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
@@ -123,6 +123,7 @@ const RegisterPage = () => {
                 value={values.password}
                 id='auth-register-password'
                 onChange={handleChange('password')}
+                sx={{ marginBottom: 4 }}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
@@ -137,6 +138,7 @@ const RegisterPage = () => {
                 }
               />
             </FormControl>
+             { error && <Alert severity='error'>{error}</Alert> }
             {/* <FormControlLabel
               control={<Checkbox />}
               label={

@@ -9,7 +9,7 @@ import UserLayout from '../layouts/UserLayout'
 import ThemeComponent from '../@core/theme/ThemeComponent'
 import { SettingsConsumer, SettingsProvider } from '../@core/context/settingsContext'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import { wrapper } from "../redux/store"
+import { wrapper } from "../app/store"
 import '../../styles/globals.css'
 
 type ExtendedAppProps = AppProps & {
