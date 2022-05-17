@@ -3,8 +3,8 @@ import Box from '@mui/material/Box'
 import { Theme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import VerticalLayout from '../@core/layouts/VerticalLayout'
-import VerticalNavItems from 'src/navigation/vertical'
-import VerticalAppBarContent from './components/vertical/AppBarContent'
+import VerticalNavItems from 'src/navigation'
+import VerticalAppBarContent from 'src/views/base/AppBarContent'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 interface Props {

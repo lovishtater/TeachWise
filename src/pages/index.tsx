@@ -32,13 +32,13 @@ import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
-import Logo from 'src/layouts/components/Logo' 
+import Logo from 'src/views/base/Logo' 
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
+import FooterIllustrationsV1 from 'src/views/base/FooterIllustration'
 import { Grid } from '@mui/material'
 import { ArrowRight } from 'mdi-material-ui'
 

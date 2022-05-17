@@ -8,7 +8,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import MuiCard, { CardProps } from "@mui/material/Card";
 import themeConfig from "src/configs/themeConfig";
 import BlankLayout from "src/@core/layouts/BlankLayout";
-import FooterIllustrationsV1 from "src/views/pages/FooterIllustration";
+import FooterIllustrationsV1 from "src/views/base/FooterIllustration";
 import { Language, Expertise } from "src/configs/constants";
 import { Autocomplete, Grid } from "@mui/material";
 import { signUp } from "src/app/actions/auth";

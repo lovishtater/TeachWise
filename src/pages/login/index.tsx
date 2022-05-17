@@ -22,9 +22,9 @@ import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormCo
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import themeConfig from '../../configs/themeConfig'
-import Logo from 'src/layouts/components/Logo' 
+import Logo from 'src/views/base/Logo' 
 import BlankLayout from '../../@core/layouts/BlankLayout'
-import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
+import FooterIllustrationsV1 from '../../views/base/FooterIllustration'
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from 'src/app/store';
 import {app} from '../../configs/firebase'
