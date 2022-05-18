@@ -16,10 +16,10 @@ import SendIcon from 'mdi-material-ui/Send';
 import InputAdornment from '@mui/material/InputAdornment'
 import Magnify from 'mdi-material-ui/Magnify'
 import {io} from 'socket.io-client';
-import type { RootState, AppDispatch } from 'src/app/store';
-import {  useSelector } from "react-redux";
 import { AnySet } from 'immer/dist/internal';
 import { sendMessages } from 'src/app/actions/messages';
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
 
 const useStyles = makeStyles({
   table: {
@@ -61,6 +61,9 @@ const Chat = () => {
 
   const classes = useStyles();
   const socket:any = useRef();
+
+  const dispatch = useDispatch<AppDispatch>();
+
 
   console.log("user is",user)
 
@@ -122,13 +125,19 @@ const Chat = () => {
     console.log("end");
 
     //perform the API Call for DB
-    const response = await sendMessages(messageObj);
+
+console.log("message object",messageObj)
+
+      await dispatch(sendMessages(messageObj))
+
+    
+
     // const data = await response.json();
     // console.log("data",data);
     // setMessages((prev:any) => [...prev, data]);
     // setNewMessage("");
 
-    console.log("response",response);
+    // console.log("response",JSON.parse(response));
 
   };
 
