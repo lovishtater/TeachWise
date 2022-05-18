@@ -3,7 +3,6 @@ import IconButton from '@mui/material/IconButton'
 import WeatherNight from 'mdi-material-ui/WeatherNight'
 import WeatherSunny from 'mdi-material-ui/WeatherSunny'
 
-// ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
 
 interface Props {
@@ -12,7 +11,6 @@ interface Props {
 }
 
 const ModeToggler = (props: Props) => {
-  // ** Props
   const { settings, saveSettings } = props
 
   const handleModeChange = (mode: PaletteMode) => {

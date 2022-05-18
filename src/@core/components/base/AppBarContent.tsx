@@ -5,9 +5,9 @@ import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Menu from 'mdi-material-ui/Menu'
 import { Settings } from 'src/@core/context/settingsContext'
-import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
-import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
-import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+import ModeToggler from 'src/@core/components/appBar/ModeToggler'
+import UserDropdown from 'src/@core/components/appBar/UserDropdown'
+import NotificationDropdown from 'src/@core/components/appBar/NotificationDropdown'
 
 interface Props {
   hidden: boolean

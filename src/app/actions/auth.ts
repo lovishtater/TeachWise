@@ -6,7 +6,7 @@ USER_AUTH_FAIL,
 USER_AUTH_LOGOUT
 } from '../constants/auth';
 
-import {app} from '../../configs/firebase'
+import {app} from '../../@core/configs/firebase'
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 

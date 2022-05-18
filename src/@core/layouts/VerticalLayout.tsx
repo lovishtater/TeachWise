@@ -1,15 +1,12 @@
-
 import { useState } from 'react'
-
-
 import { styled } from '@mui/material/styles'
 import Box, { BoxProps } from '@mui/material/Box'
-import themeConfig from '../../configs/themeConfig'
+import themeConfig from '../configs/themeConfig'
 import { LayoutProps } from '../../@core/layouts/types'
 
 // ** Components
-import AppBar from './components/vertical/appBar'
-import Navigation from './components/vertical/navigation'
+import AppBar from '../components/appBar'
+import Navigation from '../components/navigation'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',

@@ -21,7 +21,7 @@ CardHeader,
 Autocomplete,
 Radio,
 } from '@mui/material'
-import { Language, Expertise } from 'src/configs/constants'
+import { Language, Expertise } from 'src/@core/configs/constants'
 
 const CreatePost = (props:any) => {
 
