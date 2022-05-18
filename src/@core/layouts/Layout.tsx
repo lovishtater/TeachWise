@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Box, { BoxProps } from '@mui/material/Box'
 import themeConfig from '../configs/themeConfig'
-import { LayoutProps } from '../../@core/layouts/types'
+import { LayoutProps } from './types'
 
 // ** Components
 import AppBar from '../components/appBar'
 import Navigation from '../components/navigation'
 
-const VerticalLayoutWrapper = styled('div')({
+const LayoutWrapper = styled('div')({
   height: '100%',
   display: 'flex'
 })
@@ -32,7 +32,7 @@ const ContentWrapper = styled('main')(({ theme }) => ({
   }
 }))
 
-const VerticalLayout = (props: LayoutProps) => {
+const Layout = (props: LayoutProps) => {
   const { settings, children } = props
   const { contentWidth } = settings
   const navWidth = themeConfig.navigationSize
@@ -45,7 +45,7 @@ const VerticalLayout = (props: LayoutProps) => {
 
   return (
     <>
-      <VerticalLayoutWrapper className='layout-wrapper'>
+      <LayoutWrapper className='layout-wrapper'>
         {/* Navigation Menu */}
         <Navigation
           navWidth={navWidth}
@@ -72,9 +72,9 @@ const VerticalLayout = (props: LayoutProps) => {
             {children}
           </ContentWrapper>
         </MainContentWrapper>
-      </VerticalLayoutWrapper>
+      </LayoutWrapper>
     </>
   )
 }
 
-export default VerticalLayout
+export default Layout

@@ -1,7 +1,7 @@
 // ** React Imports
 import { forwardRef, useState } from 'react'
 import { connect } from "react-redux"
-import {setPost} from '../../redux/actions/main'
+// import {setPost} from '../../redux/actions/main'
 
 // ** MUI Imports
 import {
@@ -137,13 +137,5 @@ const CreatePost = (props:any) => {
   )
 }
 
-const mapStateToProps = (state:any) => {
-  return { props: state.post }
- }
- 
- const mapDispatchToProps = {
-   setPost
- }
-
- export default connect(mapStateToProps, mapDispatchToProps)(CreatePost)
+ export default CreatePost
 

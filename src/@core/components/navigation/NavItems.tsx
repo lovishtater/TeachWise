@@ -3,8 +3,8 @@ import { Settings } from 'src/@core/context/settingsContext'
 import { NavLink, NavSectionTitle, VerticalNavItemsType } from 'src/@core/layouts/types'
 
 // ** Custom Menu Components
-import VerticalNavLink from './VerticalNavLink'
-import VerticalNavSectionTitle from './VerticalNavSectionTitle'
+import VerticalNavLink from './NavLink'
+import VerticalNavSectionTitle from './NavSectionTitle'
 
 interface Props {
   settings: Settings

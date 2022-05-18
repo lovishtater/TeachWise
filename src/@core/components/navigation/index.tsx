@@ -1,22 +1,12 @@
-// ** React Import
 import { ReactNode, useRef, useState } from 'react'
-
-// ** MUI Import
 import List from '@mui/material/List'
 import Box, { BoxProps } from '@mui/material/Box'
-import { styled, useTheme } from '@mui/material/styles'
-
-
 import PerfectScrollbar from 'react-perfect-scrollbar'
-
-// ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
-import { VerticalNavItemsType } from 'src/@core/layouts/types'
-
-// ** Component Imports
+import { NavItemsType } from 'src/@core/layouts/types'
 import Drawer from './Drawer'
-import VerticalNavItems from './VerticalNavItems'
-import VerticalNavHeader from './VerticalNavHeader'
+import NavItems from './NavItems'
+import NavHeader from './NavHeader'
 
 interface Props {
   hidden: boolean
@@ -26,35 +16,29 @@ interface Props {
   navVisible: boolean
   toggleNavVisibility: () => void
   setNavVisible: (value: boolean) => void
-  verticalNavItems?: VerticalNavItemsType
+  verticalNavItems?: NavItemsType
   saveSettings: (values: Settings) => void
-  verticalNavMenuContent?: (props?: any) => ReactNode
-  afterVerticalNavMenuContent?: (props?: any) => ReactNode
-  beforeVerticalNavMenuContent?: (props?: any) => ReactNode
+  NavMenuContent?: (props?: any) => ReactNode
+  afterNavMenuContent?: (props?: any) => ReactNode
+  beforeNavMenuContent?: (props?: any) => ReactNode
 }
 
 
 
 const Navigation = (props: Props) => {
-  // ** Props
   const {
     hidden,
-    afterVerticalNavMenuContent,
-    beforeVerticalNavMenuContent,
-    verticalNavMenuContent: userVerticalNavMenuContent
+    afterNavMenuContent,
+    beforeNavMenuContent,
+    NavMenuContent: userNavMenuContent
   } = props
 
-  // ** States
   const [groupActive, setGroupActive] = useState<string[]>([])
   const [currentActiveGroup, setCurrentActiveGroup] = useState<string[]>([])
 
-  // ** Ref
   const shadowRef = useRef(null)
 
-  // ** Hooks
-  const theme = useTheme()
 
-  // ** Fixes Navigation InfiniteScroll
   const handleInfiniteScroll = (ref: HTMLElement) => {
     if (ref) {
       // @ts-ignore
@@ -69,7 +53,6 @@ const Navigation = (props: Props) => {
     }
   }
 
-  // ** Scroll Menu
   const scrollMenu = (container: any) => {
     container = hidden ? container.target : container
     if (shadowRef && container.scrollTop > 0) {
@@ -88,7 +71,7 @@ const Navigation = (props: Props) => {
 
   return (
     <Drawer {...props}>
-      <VerticalNavHeader {...props} />
+      <NavHeader {...props} />
       <Box sx={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
         {/* @ts-ignore */}
         <ScrollWrapper
@@ -103,13 +86,13 @@ const Navigation = (props: Props) => {
                 onScrollY: (container: any) => scrollMenu(container)
               })}
         >
-          {beforeVerticalNavMenuContent ? beforeVerticalNavMenuContent(props) : null}
+          {beforeNavMenuContent ? beforeNavMenuContent(props) : null}
           <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            {userVerticalNavMenuContent ? (
-              userVerticalNavMenuContent(props)
+            {userNavMenuContent ? (
+              userNavMenuContent(props)
             ) : (
               <List className='nav-items' sx={{ transition: 'padding .25s ease', pr: 4.5 }}>
-                <VerticalNavItems
+                <NavItems
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}
                   currentActiveGroup={currentActiveGroup}
@@ -121,7 +104,7 @@ const Navigation = (props: Props) => {
           </Box>
         </ScrollWrapper>
       </Box>
-      {afterVerticalNavMenuContent ? afterVerticalNavMenuContent(props) : null}
+      {afterNavMenuContent ? afterNavMenuContent(props) : null}
     </Drawer>
   )
 }

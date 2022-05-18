@@ -24,21 +24,21 @@ export type NavSectionTitle = {
   subject?: string
 }
 
-export type VerticalNavItemsType = (NavLink | NavSectionTitle)[]
+export type NavItemsType = (NavLink | NavSectionTitle)[]
 
 export type LayoutProps = {
   hidden: boolean
   settings: Settings
   children: ReactNode
-  verticalNavItems?: VerticalNavItemsType
+  verticalNavItems?: NavItemsType
   scrollToTop?: (props?: any) => ReactNode
   saveSettings: (values: Settings) => void
   footerContent?: (props?: any) => ReactNode
-  verticalAppBarContent?: (props?: any) => ReactNode
-  verticalNavMenuContent?: (props?: any) => ReactNode
-  verticalNavMenuBranding?: (props?: any) => ReactNode
-  afterVerticalNavMenuContent?: (props?: any) => ReactNode
-  beforeVerticalNavMenuContent?: (props?: any) => ReactNode
+  AppBarContent?: (props?: any) => ReactNode
+  NavMenuContent?: (props?: any) => ReactNode
+  NavMenuBranding?: (props?: any) => ReactNode
+  afterNavMenuContent?: (props?: any) => ReactNode
+  beforeNavMenuContent?: (props?: any) => ReactNode
 }
 
 export type BlankLayoutProps = {

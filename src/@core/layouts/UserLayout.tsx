@@ -2,9 +2,9 @@ import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import { Theme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import VerticalLayout from './VerticalLayout'
-import VerticalNavItems from 'src/navigation'
-import VerticalAppBarContent from 'src/@core/components/base/AppBarContent'
+import Layout from './Layout'
+import NavItems from 'src/navigation'
+import AppBarContent from 'src/@core/components/base/AppBarContent'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 interface Props {
@@ -24,16 +24,16 @@ const UserLayout = ({ children }: Props) => {
   // }
 
   return (
-    <VerticalLayout
+    <Layout
       hidden={hidden}
       settings={settings}
       saveSettings={saveSettings}
-      verticalNavItems={VerticalNavItems()} // Navigation Items
-      // afterVerticalNavMenuContent={Upcomming}
-      verticalAppBarContent={(
+      verticalNavItems={NavItems()} // Navigation Items
+      // afterNavMenuContent={Upcomming}
+      AppBarContent={(
         props // AppBar Content
       ) => (
-        <VerticalAppBarContent
+        <AppBarContent
           hidden={hidden}
           settings={settings}
           saveSettings={saveSettings}
@@ -42,7 +42,7 @@ const UserLayout = ({ children }: Props) => {
       )}
     >
       {children}
-    </VerticalLayout>
+    </Layout>
   )
 }
 
