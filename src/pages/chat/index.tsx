@@ -16,9 +16,10 @@ import SendIcon from 'mdi-material-ui/Send';
 import InputAdornment from '@mui/material/InputAdornment'
 import Magnify from 'mdi-material-ui/Magnify'
 import {io} from 'socket.io-client';
-import type { RootState, AppDispatch } from 'src/app/store';
-import {  useSelector } from "react-redux";
 import { AnySet } from 'immer/dist/internal';
+import { sendMessages } from 'src/app/actions/messages';
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
 
 const useStyles = makeStyles({
   table: {
@@ -60,6 +61,9 @@ const Chat = () => {
 
   const classes = useStyles();
   const socket:any = useRef();
+
+  const dispatch = useDispatch<AppDispatch>();
+
 
   console.log("user is",user)
 
@@ -105,18 +109,36 @@ const Chat = () => {
 
     console.log("currentChat",currentChat);
 
-    const receiverId = "6283cfe27d42185f4ee20732";
+    const receiverId = "628370482299fafc11783136";
 
     // const receiverId = currentChat.members.find(
     //   (member:any) => member !== user._id
     // );
 
-    socket.current.emit("sendMessage", {
+    const messageObj = {
       senderId: user._id,
-      receiverId,
+      receiverId: receiverId,
       text: newMessage,
-    });
+    };
+
+    socket.current.emit("sendMessage", messageObj);
     console.log("end");
+
+    //perform the API Call for DB
+
+console.log("message object",messageObj)
+
+      await dispatch(sendMessages(messageObj))
+
+    
+
+    // const data = await response.json();
+    // console.log("data",data);
+    // setMessages((prev:any) => [...prev, data]);
+    // setNewMessage("");
+
+    // console.log("response",JSON.parse(response));
+
   };
 
   return (
@@ -203,6 +225,19 @@ const Chat = () => {
                             </Grid>
                         </Grid>
                     </ListItem>
+                    {arrivalMessage && (
+                        <ListItem key={arrivalMessage.createdAt}>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <ListItemText  primary={arrivalMessage.text}></ListItemText>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ListItemText  secondary={new Date(arrivalMessage.createdAt).toLocaleTimeString()}></ListItemText>
+                                </Grid>
+                            </Grid>
+                        </ListItem>
+                    )}
+                    
                 </List>
                 <Divider />
                 <Grid container style={{padding: '20px'}}>
