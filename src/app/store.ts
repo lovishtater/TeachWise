@@ -20,7 +20,7 @@ const initialState: IState = {
     auth : {
         isLoading : false,
         error : null,
-        user : localStorage.getItem("TeachWiseuser") ? JSON.parse(localStorage.getItem("TeachWiseuser") as string) : null
+        user : null
     }
 };
 const store = () => configureStore({
