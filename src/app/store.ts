@@ -3,17 +3,20 @@ import {configureStore } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
 import { createWrapper } from "next-redux-wrapper"
 import { authReducer } from "./reducers/auth"
+import {getQuestionReducer} from "./reducers/questionPostReducer"
 const middleware = [thunk]
 
 interface IState {
     auth: any
+    questions: any
 }
 
 //old code 
 // const makeStore = () => createStore(rootReducer, compose(applyMiddleware(...middleware)))
 
 const reducer = combineReducers({
-    auth : authReducer
+    auth : authReducer,
+    questions : getQuestionReducer
 })
 
 const initialState: IState = {
@@ -21,8 +24,14 @@ const initialState: IState = {
         isLoading : false,
         error : null,
         user : null
+    },
+    questions : {
+        isLoading : false,
+        error : null,
+        questions : []
     }
 };
+
 const store = () => configureStore({
     reducer,
     //@ts-ignore

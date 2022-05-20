@@ -22,34 +22,38 @@ Autocomplete,
 Radio,
 } from '@mui/material'
 import { Language, Expertise } from 'src/@core/configs/constants'
-
+import { askQuestion } from 'src/app/actions/questionPost'
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from 'src/app/store';
 const CreatePost = (props:any) => {
-
-  const { initialState, setPost } = props
+  const dispatch = useDispatch<AppDispatch>();
 
   // ** State
   const [values, setValues] = useState({
     title: '',
     description: '',
-    expertise: '',
+    tags: [],
     language: [],
-    minimumFee: '',
-    maximumFee: '',
-    mode: '',
-    status: '',
+    fee: '',
+    consultationType: '',
   })
 
 
   const onSubmit = (e:any) => {
-    e.preventDefault()
-    console.log(values)
-    setPost(values);
+    askQuestion(values).then((res:any) => {
+      alert('Question posted successfully')
+    }).catch((err:any) => {
+      alert('Error posting question')
+    })
   }
 
   const handleChange = (name:any) => (event:any) => {
 		setValues({ ...values, [name]: event.target.value });
 	};
 
+  const handleAutocompleteChange = (name:any) => (value:any) => {
+    setValues({ ...values, [name]: value });
+  }
   return (
       <Card>
     <CardHeader title="Create Post"
@@ -72,7 +76,7 @@ const CreatePost = (props:any) => {
               label='Description'
               minRows={4}
               placeholder='Bio'
-              onChange={handleChange('Description')}
+              onChange={handleChange('description')}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -81,6 +85,7 @@ const CreatePost = (props:any) => {
               multiple
               id="tags-filled"
               options={Expertise}
+              onChange={(event, newValue) => handleAutocompleteChange('tags')(newValue)}
               getOptionLabel={(option) => option}
               renderInput={(params) => (
                 <TextField
@@ -98,19 +103,17 @@ const CreatePost = (props:any) => {
               fullWidth
               multiple
               options={Language}
+              onChange={(event, newValue) => { handleAutocompleteChange('language')(newValue) }}
               getOptionLabel={(option) => option}
               renderInput={(params) => (
-                <TextField {...params} label="Language" variant="outlined" onChange={handleChange('Language')} />
+                <TextField {...params} label="Language" variant="outlined"  />
               )}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-            <TextField fullWidth type='number' label='Minimum Fee' placeholder='Minimum Fee' onChange={handleChange('minimumFee')} />
-              </Grid>
-              <Grid item xs={6}>
-            <TextField fullWidth type='number' label='Maximum Fee' placeholder='Maximum Fee' onChange={handleChange('maximumFee')} />
+            <TextField fullWidth type='number' label='Fee' placeholder='Fee' onChange={handleChange('fee')} />
               </Grid>
               </Grid>
           </Grid>
@@ -118,17 +121,14 @@ const CreatePost = (props:any) => {
             <FormControl>
               <FormLabel>Mode</FormLabel>
               <RadioGroup row defaultValue='male' aria-label='gender' name='account-settings-info-radio'>
-                <FormControlLabel value='Online' label='Online' control={<Radio />} onClick={handleChange('mode')}/>
-                <FormControlLabel value='Offline' label='Offline' control={<Radio />} onClick={handleChange('mode')} />
+                <FormControlLabel value='online' label='Online' control={<Radio />} onClick={handleChange('consultationType')}/>
+                <FormControlLabel value='offline' label='Offline' control={<Radio />} onClick={handleChange('consultationType')} />
               </RadioGroup>
             </FormControl>
           </Grid>
           <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }} onClick={(e) => onSubmit(e)} >
               Post
-            </Button>
-            <Button type='reset' variant='outlined' color='secondary'>
-              Reset
             </Button>
           </Grid>
         </Grid>
@@ -139,3 +139,4 @@ const CreatePost = (props:any) => {
 
  export default CreatePost
 
+ 
