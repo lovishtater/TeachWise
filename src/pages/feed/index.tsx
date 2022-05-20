@@ -1,13 +1,12 @@
-import { Button, Checkbox, Grid, Typography } from '@mui/material';
+import { Grid, Typography, TextField, InputAdornment } from '@mui/material';
 import type { NextPage } from 'next'
-import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
 import Magnify from 'mdi-material-ui/Magnify'
-import PostCard from "src/pages/feed/PostCard";
+import PostCard from "src/@core/components/proposalComponents/PostCard";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from 'src/app/store';
 import { useEffect } from 'react';
 import { getQuestion } from 'src/app/actions/questionPost';
+
   const grid = {
             justifyContent: 'center',
             alignItems: 'center',
@@ -23,7 +22,7 @@ const Feed: NextPage = () => {
     useEffect(() => {
         dispatch(getQuestion());
     }, []);
-    console.log(question)
+
   return (
     <div>
       <main>
@@ -46,11 +45,10 @@ const Feed: NextPage = () => {
         </div>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9} md={9} sx={grid}>
-            {question && question.length > 0 && question.map((question:any) => (
+            {question && question.length > 0 && question.map((question:any, index: Number) => (
             <PostCard
-            name={question.createdBy.name}
-            description={question.description}
-            tags={question.tags}
+              key={index}
+              question={question}
             />
             ))}
           </Grid>
