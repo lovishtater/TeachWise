@@ -1,6 +1,6 @@
 // ** Types Import
 import { Settings } from 'src/@core/context/settingsContext'
-import { NavLink, NavSectionTitle, VerticalNavItemsType } from 'src/@core/layouts/types'
+import { NavLink, NavSectionTitle, NavItemsType } from 'src/@core/layouts/types'
 
 // ** Custom Menu Components
 import VerticalNavLink from './NavLink'
@@ -11,7 +11,7 @@ interface Props {
   navVisible?: boolean
   groupActive: string[]
   currentActiveGroup: string[]
-  verticalNavItems?: VerticalNavItemsType
+  verticalNavItems?: NavItemsType
   saveSettings: (values: Settings) => void
   setGroupActive: (value: string[]) => void
   setCurrentActiveGroup: (item: string[]) => void
