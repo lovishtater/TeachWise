@@ -15,9 +15,11 @@ import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import {submitProposal} from "src/app/actions/questionPost";
 
 const ProposalButton = ({ question }: any) => {
   const [proposal, setProposal] = useState<any>({
+    postID: question._id,
     feeProposed: 0,
     coverLetter: "",
     milestone: [],
@@ -42,16 +44,22 @@ const ProposalButton = ({ question }: any) => {
     setProposal({ ...proposal, [name]: event.target.value });
   };
 
-  const handleClick = () => {
-    setOpen(true);
-    console.log("clicked");
-  };
+  const handleSubmit: any = () => {
+      submitProposal(proposal).then((res: any) => {
+        if (res == true) {
+          alert("Proposal submitted successfully");
+        }
+    }).catch((err: any) => {
+      alert("Error submitting proposal");
+    });
+  }
+
   return (
     <>
       <Button
         variant="outlined"
         color="primary"
-        onClick={() => handleClick()}
+        onClick={() => setOpen(true)}
         sx={{
           fontSize: "0.75rem",
           fontWeight: 500,
@@ -197,6 +205,9 @@ const ProposalButton = ({ question }: any) => {
                   <Button
                     variant="contained"
                     color="primary"
+                    onClick={() => {
+                      handleSubmit();
+                    }}
                     sx={{
                       fontSize: "1rem",
                       fontWeight: 500,

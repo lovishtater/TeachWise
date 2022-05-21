@@ -19,6 +19,7 @@ export const signUp =  (values:any) => async (dispatch: any) => {
     const currUser = firebase.auth().currentUser;
     const user = {
         ...values,
+        fullName: values.firstName + ' ' + values.lastName,
         email : googleResponse.email,
         googleUid : googleResponse.uid,
     }

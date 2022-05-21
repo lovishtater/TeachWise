@@ -17,9 +17,11 @@ const PostCard = ({question}: any) => {
       <CardContent sx={{ padding: theme => `${theme.spacing(3.25, 5, 4.5)} !important` }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
-            <Avatar alt='Eugene Clarke' src='/images/avatars/1.png' sx={{ width: 35, height: 35, marginRight: 2.75 }} />
             <Typography variant='body1' sx={{ color: 'common.black' , fontWeight: 'bold'}}>
-              {createdBy?.name}
+              {question.title}
+            </Typography>
+            <Typography variant='caption' sx={{ color: 'common.black', ml:1 }}>
+               ~ {createdBy?.fullName}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

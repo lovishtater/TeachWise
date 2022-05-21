@@ -10,16 +10,15 @@ import axios from 'axios';
 
 export const askQuestion = async(question : any) => {
     try {
-        const user = localStorage.getItem('teachWiseUser') ? JSON.parse(localStorage.getItem('teachWiseUser')!) : null;
+        const {user} = localStorage.getItem('teachWiseUser') ? JSON.parse(localStorage.getItem('teachWiseUser')!) : null;
         const post = { 
             ...question, 
             createdBy: {
                 id: user?._id,
-                name: user?.name,
+                fullName: user?.fullName,
                 email: user?.email
             } 
         };
-        console.log(post);
         const response =await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/createPost`, post, {
             headers: {
                 'Content-Type': 'application/json',
@@ -54,5 +53,28 @@ export const getQuestion = () => async(dispatch : any) => {
             type: GET_QUESTION_FAILURE,
             payload: error,
         });
+    }
+}
+
+export const submitProposal = async(proposal: any ) => {
+    try {
+        const user = localStorage.getItem('teachWiseUser') ? JSON.parse(localStorage.getItem('teachWiseUser')!) : null;
+        const post = {
+            ...proposal,            
+            fullName: user?.fullName,
+            email: user?.email,
+            _id: user?._id
+        };
+        console.log(post);
+        const response =await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/teacherProposal/${proposal.postID}`, post, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('teachWiseAuthToken')}`
+            }
+        });
+        localStorage.setItem('teachWiseUser', JSON.stringify(response.data.updatedUser));
+        return true;
+    } catch (error) {
+        return error;
     }
 }
