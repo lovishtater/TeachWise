@@ -13,14 +13,14 @@ import Typography, { TypographyProps } from '@mui/material/Typography'
 import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/@core/configs/themeConfig'
 
 interface Props {
   hidden: boolean
   settings: Settings
   toggleNavVisibility: () => void
   saveSettings: (values: Settings) => void
-  verticalNavMenuBranding?: (props?: any) => ReactNode
+  NavMenuBranding?: (props?: any) => ReactNode
 }
 
 // ** Styled Components
@@ -47,9 +47,9 @@ const StyledLink = styled('a')({
   textDecoration: 'none'
 })
 
-const VerticalNavHeader = (props: Props) => {
+const NavHeader = (props: Props) => {
   // ** Props
-  const { verticalNavMenuBranding: userVerticalNavMenuBranding } = props
+  const { NavMenuBranding: userVerticalNavMenuBranding } = props
 
   // ** Hooks
   const theme = useTheme()
@@ -72,4 +72,4 @@ const VerticalNavHeader = (props: Props) => {
   )
 }
 
-export default VerticalNavHeader
+export default NavHeader

@@ -1,4 +1,3 @@
-
 import { useState, SyntheticEvent, Fragment, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
@@ -17,7 +16,6 @@ import BellOutline from 'mdi-material-ui/BellOutline'
 
 import PerfectScrollbarComponent from 'react-perfect-scrollbar'
 
-// ** Styled Menu component
 const Menu = styled(MuiMenu)<MenuProps>(({ theme }) => ({
   '& .MuiMenu-paper': {
     width: 380,
@@ -32,7 +30,6 @@ const Menu = styled(MuiMenu)<MenuProps>(({ theme }) => ({
   }
 }))
 
-// ** Styled MenuItem component
 const MenuItem = styled(MuiMenuItem)<MenuItemProps>(({ theme }) => ({
   paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
@@ -46,19 +43,17 @@ const styles = {
   }
 }
 
-// ** Styled PerfectScrollbar component
+
 const PerfectScrollbar = styled(PerfectScrollbarComponent)({
   ...styles
 })
 
-// ** Styled Avatar component
 const Avatar = styled(MuiAvatar)<AvatarProps>({
   width: '2.375rem',
   height: '2.375rem',
   fontSize: '1.125rem'
 })
 
-// ** Styled component for the title in MenuItems
 const MenuItemTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
   fontWeight: 600,
   flex: '1 1 100%',
@@ -69,7 +64,6 @@ const MenuItemTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
   marginBottom: theme.spacing(0.75)
 }))
 
-// ** Styled component for the subtitle in MenuItems
 const MenuItemSubtitle = styled(Typography)<TypographyProps>({
   flex: '1 1 100%',
   overflow: 'hidden',
@@ -78,10 +72,8 @@ const MenuItemSubtitle = styled(Typography)<TypographyProps>({
 })
 
 const NotificationDropdown = () => {
-  // ** States
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null)
 
-  // ** Hook
   const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
   const handleDropdownOpen = (event: SyntheticEvent) => {

@@ -6,7 +6,7 @@ USER_AUTH_FAIL,
 USER_AUTH_LOGOUT
 } from '../constants/auth';
 
-import {app} from '../../configs/firebase'
+import {app} from '../../@core/configs/firebase'
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 
@@ -19,10 +19,13 @@ export const signUp =  (values:any) => async (dispatch: any) => {
     const currUser = firebase.auth().currentUser;
     const user = {
         ...values,
+        fullName: values.firstName + ' ' + values.lastName,
         email : googleResponse.email,
         googleUid : googleResponse.uid,
     }
     const token = await currUser?.getIdToken(true);
+    if(token)
+    localStorage.setItem('teachWiseAuthToken', token);
     const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/signup`, 
     user, {
         headers: {
@@ -54,6 +57,8 @@ export const signIn = ({email, password} : any) => async (dispatch: any) => {
     const googleResponse = await app.auth().signInWithEmailAndPassword(email, password);
     const currUser = firebase.auth().currentUser;
     const token = await currUser?.getIdToken(true)
+    if(token)
+    localStorage.setItem('teachWiseAuthToken', token);
     const data = { 
         email: email,
         googleUid : googleResponse ? googleResponse.user?.uid : null,

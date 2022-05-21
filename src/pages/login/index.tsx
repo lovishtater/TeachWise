@@ -15,19 +15,21 @@ import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
-import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+import { styled, useTheme } from '@mui/material/styles'
+import MuiCard, { CardProps } from '@mui/material/Card'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import themeConfig from '../../configs/themeConfig'
-import Logo from 'src/layouts/components/Logo' 
+import themeConfig from '../../@core/configs/themeConfig'
+import Logo from 'src/@core/components/base/Logo' 
 import BlankLayout from '../../@core/layouts/BlankLayout'
-import FooterIllustrationsV1 from '../../views/pages/FooterIllustration'
+import FooterIllustrationsV1 from '../../@core/components/base/FooterIllustration'
+
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from 'src/app/store';
-import {app} from '../../configs/firebase'
+
+import {app} from '../../@core/configs/firebase'
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import { signIn } from 'src/app/actions/auth'

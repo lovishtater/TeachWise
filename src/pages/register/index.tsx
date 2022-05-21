@@ -1,5 +1,5 @@
 
-import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode } from 'react'
+import { useState, ChangeEvent, MouseEvent, ReactNode } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -7,7 +7,6 @@ import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import InputLabel from '@mui/material/InputLabel'
@@ -15,17 +14,17 @@ import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/@core/configs/themeConfig'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-import FooterIllustrationsV1 from 'src/views/pages/FooterIllustration'
-import Logo from 'src/layouts/components/Logo'
-import {app} from '../../configs/firebase'
+import FooterIllustrationsV1 from 'src/@core/components/base/FooterIllustration'
+import Logo from 'src/@core/components/base/Logo'
+import {app} from '../../@core/configs/firebase'
 import { Alert } from '@mui/material'
 
 import "firebase/compat/auth"
@@ -132,7 +131,7 @@ const RegisterPage = () => {
                       onClick={handleClickShowPassword}
                       aria-label='toggle password visibility'
                     >
-                      {values.showPassword ? <EyeOutline fontSize='small' /> : <EyeOffOutline fontSize='small' />}
+                      {values.showPassword ? <RemoveRedEyeIcon fontSize='small' /> : <EyeOffOutline fontSize='small' />}
                     </IconButton>
                   </InputAdornment>
                 }

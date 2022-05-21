@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import GlobalStyles from '@mui/material/GlobalStyles'
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { Settings } from 'src/@core/context/settingsContext'
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/@core/configs/themeConfig'
 import themeOptions from './ThemeOptions'
 import GlobalStyling from './globalStyles'
 
