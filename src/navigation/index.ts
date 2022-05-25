@@ -1,6 +1,6 @@
-import { VerticalNavItemsType } from 'src/@core/layouts/types'
+import { NavItemsType } from 'src/@core/layouts/types'
 
-const navigation = (): VerticalNavItemsType => {
+const navigation = (): NavItemsType => {
   return [
     {
       title: 'Feed',

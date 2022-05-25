@@ -2,11 +2,10 @@ import {SET_MESSAGES} from "../constants/messages";
 import axios from "axios";
 
 const API =process.env.NEXT_PUBLIC_BACKEND;
-const token = localStorage.getItem('teachWiseAuthToken');
 
 export const sendMessages = (message:any) => async(dispatch:any) => { 
-
-
+  
+  const token = localStorage.getItem('teachWiseAuthToken');
     console.log("token auth",token)
   //here API call with axios
     console.log("fetched message",message)

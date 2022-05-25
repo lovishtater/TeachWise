@@ -39,10 +39,10 @@ const UserDropdown = () => {
     }
     setAnchorEl(null)
   }
-  useEffect(() => {
-    if (!user) {
-      router.push('/login')
-    }}, [user])
+  // useEffect(() => {
+  //   if (!user) {
+  //     router.push('/login')
+  //   }}, [user])
 
   const styles = {
     py: 2,

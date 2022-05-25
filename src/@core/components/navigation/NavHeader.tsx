@@ -20,7 +20,7 @@ interface Props {
   settings: Settings
   toggleNavVisibility: () => void
   saveSettings: (values: Settings) => void
-  verticalNavMenuBranding?: (props?: any) => ReactNode
+  NavMenuBranding?: (props?: any) => ReactNode
 }
 
 // ** Styled Components
@@ -47,9 +47,9 @@ const StyledLink = styled('a')({
   textDecoration: 'none'
 })
 
-const VerticalNavHeader = (props: Props) => {
+const NavHeader = (props: Props) => {
   // ** Props
-  const { verticalNavMenuBranding: userVerticalNavMenuBranding } = props
+  const { NavMenuBranding: userVerticalNavMenuBranding } = props
 
   // ** Hooks
   const theme = useTheme()
@@ -72,4 +72,4 @@ const VerticalNavHeader = (props: Props) => {
   )
 }
 
-export default VerticalNavHeader
+export default NavHeader

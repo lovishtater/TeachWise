@@ -6,18 +6,22 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import ShareVariant from 'mdi-material-ui/ShareVariant'
 import { Bookmark } from 'mdi-material-ui'
-import { Chip, Button, Grid } from '@mui/material'
+import { Chip } from '@mui/material'
+import BidButton from './ProposalButton'
 
-const PostCard = ({name, description,tags }: any) => {
+const PostCard = ({question}: any) => {
+  const {id , createdBy, description,tags } = question;
   return (
     <Card 
-    sx={{border: 0, boxShadow: 2, color: 'common.black', backgroundColor: '#fff' , marginBottom: 4 , minWidth: '100%'}}>
+    sx={{border: 0, boxShadow: 2, color: 'common.black', backgroundColor: 'white' , marginBottom: 4 , minWidth: '100%'}}>
       <CardContent sx={{ padding: theme => `${theme.spacing(3.25, 5, 4.5)} !important` }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
-            <Avatar alt='Eugene Clarke' src='/images/avatars/1.png' sx={{ width: 35, height: 35, marginRight: 2.75 }} />
             <Typography variant='body1' sx={{ color: 'common.black' , fontWeight: 'bold'}}>
-              {name}
+              {question.title}
+            </Typography>
+            <Typography variant='caption' sx={{ color: 'common.black', ml:1 }}>
+               ~ {createdBy?.fullName}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -49,12 +53,9 @@ const PostCard = ({name, description,tags }: any) => {
         ))}
           </Box>
            <Box>
-            <Button variant='outlined' color='primary' sx={{ fontSize: '0.75rem', fontWeight: 500, padding: '0.25rem 0.5rem', borderRadius: '0.25rem' , marginTop : '0.25rem '}}>
-              Lets Solve
-            </Button>
+            <BidButton question={question} />
           </Box>
         </Box>
-
       </CardContent>
     </Card>
   )
