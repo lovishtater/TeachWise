@@ -3,13 +3,14 @@ import {configureStore } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
 import { createWrapper } from "next-redux-wrapper"
 import { authReducer } from "./reducers/auth"
-const middleware = [thunk]
+import { themeReducer } from "./reducers/theme"
 
 
 //old code 
 // const makeStore = () => createStore(rootReducer, compose(applyMiddleware(...middleware)))
 const reducer = combineReducers({
-    auth : authReducer
+    auth : authReducer,
+    theme: themeReducer
 })
 
 // const initialState = {
@@ -22,7 +23,8 @@ const reducer = combineReducers({
 
 const store = () => configureStore({
     reducer,
-    middleware
+    //TODO:tater check this
+    // middleware
 });
 
 

@@ -81,7 +81,6 @@ export const signIn = ({email, password} : any) => async (dispatch: any) => {
     }
 }
 
-
 export const logout = () => async (dispatch: any) => {
     try{
         await app.auth().signOut();
