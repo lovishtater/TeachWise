@@ -98,6 +98,11 @@ export const logout = () => async (dispatch: any) => {
     }
 }
 
+export const getAuthToken = async() => {
+    const currUser = firebase.auth().currentUser;
+    const token = await currUser?.getIdToken(true);
+    return token;
+}
 
 
     

@@ -45,13 +45,13 @@ const App = (props: ExtendedAppProps) => {
         <link rel="icon" href="/logo.ico" />
       </Head>
 
-      {/* <SettingsProvider>
+      <SettingsProvider>
         <SettingsConsumer>
           {({ settings }) => {
             return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
           }}
         </SettingsConsumer>
-      </SettingsProvider> */}
+      </SettingsProvider>
     </>
   )
 }
