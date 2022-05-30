@@ -3,7 +3,8 @@ import {configureStore } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
 import { createWrapper } from "next-redux-wrapper"
 import { authReducer } from "./reducers/auth"
-import {getQuestionReducer} from "./reducers/questionPostReducer"
+import { themeReducer } from "./reducers/theme"
+import {getQuestionReducer, getUserDoubtReducer} from "./reducers/questionPostReducer"
 const middleware = [thunk]
 
 interface IState {
@@ -16,7 +17,9 @@ interface IState {
 
 const reducer = combineReducers({
     auth : authReducer,
-    questions : getQuestionReducer
+    theme: themeReducer,
+    questions : getQuestionReducer,
+    userDoubt: getUserDoubtReducer
 })
 
 const initialState: IState = {
@@ -34,9 +37,11 @@ const initialState: IState = {
 
 const store = () => configureStore({
     reducer,
+    //TODO:tater check this
+     middleware,
     //@ts-ignore
     initialState,
-    middleware
+    // middleware
 });
 
 
