@@ -5,11 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from 'src/app/store';
 import UserPostCard from 'src/@core/components/proposalComponents/UserPostCard';
 
-const index = () => {
+const DoubtStatus = () => {
     const dispatch = useDispatch<AppDispatch>();
   const {userDoubt} = useSelector((state: RootState) => state.userDoubt);
-  const userDoubt1 = useSelector((state: RootState) => state);
-  console.log(userDoubt1);
   useEffect(() => {
     dispatch(getMyDoubts())
   }, [])
@@ -22,4 +20,4 @@ const index = () => {
   )
 }
 
-export default index
+export default DoubtStatus
