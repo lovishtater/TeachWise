@@ -13,6 +13,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import Button from '@mui/material/Button';
 import moment from 'moment';
 import { Delete } from '@mui/icons-material';
+import { acceptProposal } from 'src/app/actions/questionPost';
 export default function UserPostCard({
     question
 }:{
@@ -23,6 +24,13 @@ export default function UserPostCard({
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const handleAcceptProposal = async(user : Object, postId: String) => {
+        await acceptProposal(user, postId).then(res => {
+            console.log(res);
+        })
+    }
+
 
   return (
     <Card style={{marginBottom: '10px'}}>
@@ -64,10 +72,12 @@ export default function UserPostCard({
           </Typography>
           {teacherProposal && teacherProposal.length > 0 && teacherProposal.map((proposal:any, index: Key) => (
               <>
+             
                     <CardHeader 
                         avatar={    
                             <Avatar aria-label="recipe">
-                                {proposal.fullName[0]}
+                                {/* {proposal.fullName.charAt(0)} */}
+                                L
                             </Avatar>
                         }
                         title={proposal.fullName}
@@ -77,17 +87,19 @@ export default function UserPostCard({
                                 <Button
                                     color="primary"
                                     variant='contained'
-                                    onClick={() => {}}
+                                    onClick={() => {handleAcceptProposal(proposal, question._id)}}
                                 >
                                     Accept Proposal
                                 </Button>
                             ):(
                                 <Button
-                                    color={teacherAccepted._id === proposal._id ? 'success' : 'error'}
+                                    color={teacherAccepted[0]._id === proposal._id ? 'success' : 'error'}
                                     variant='contained'
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                      console.log(teacherAccepted, proposal._id);
+                                    }}
                                 >
-                                    {teacherAccepted._id === proposal._id ? 'Accepted' : 'Rejected'}
+                                    {teacherAccepted[0]._id === proposal._id ? 'Accepted' : 'Rejected'}
                                 </Button>
                             )
                         }

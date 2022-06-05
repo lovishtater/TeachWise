@@ -111,5 +111,21 @@ export const getMyDoubts = () => async( dispatch : any) => {
         });
     }
 }
+
+export const acceptProposal = async(user: any , postId:any ) => {
+    try {
+        const token : any = await getAuthToken();
+        const response =await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/acceptProposal/${postId}`, user, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
         
 
